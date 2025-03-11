@@ -31,7 +31,8 @@ void main() async {
   runApp(MyApp(settingsController: settingsController));
 
   final supabase = Supabase.instance.client;
-  final test;
+
+  print(supabase.auth.currentSession);
 
 }
 
