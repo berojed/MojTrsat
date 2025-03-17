@@ -15,16 +15,12 @@ void main() async {
   );
 
   runApp(MaterialApp(initialRoute: '/login', routes: {
-    '/login': (context) => const LoginScreen(),
+    '/login': (context) => LoginScreen(),
     '/registration': (context) => const RegistrationScreen(),
     '/home': (context) => const HomeScreen(),
     '/main': (context) => const MainScreen(),
     '/settings': (context) => const SettingsScreen(),
   }));
 
-<<<<<<< HEAD
-
-=======
   final supabase = Supabase.instance.client;
->>>>>>> origin/main
 }

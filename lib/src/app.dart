@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
                   case '/login':
-                    return const LoginScreen();
+                    return  LoginScreen();
                   case '/registration':
                     return const RegistrationScreen();
                   case '/home':
