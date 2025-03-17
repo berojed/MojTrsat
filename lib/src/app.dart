@@ -70,9 +70,9 @@ class MyApp extends StatelessWidget {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
                   case '/login':
-                    return const LoginScreen();
+                    return  LoginScreen();
                   default:
-                    return const LoginScreen();
+                    return  LoginScreen();
                 }
               },
             );

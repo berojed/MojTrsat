@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:mojtrsat/data/viewmodels/loginViewmodel.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+
+  //controllers for getting email & password from  users input
+  final TextEditingController emailController =TextEditingController();
+  final TextEditingController passwordController=TextEditingController();
+
+  LoginScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
+
+    final loginViewmodel= Provider.of<LoginViewmodel>(context);
+
     return Scaffold(
       backgroundColor: Color(0x00121212),
       body: Stack(
@@ -53,6 +64,7 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(height: 50),
                     
                     TextField(
+                      controller: emailController,
                       decoration: InputDecoration(
                           labelText: 'Email',
                           border: OutlineInputBorder(
@@ -60,11 +72,30 @@ class LoginScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     TextField(
+                      controller: passwordController,
                       decoration: InputDecoration(
                           labelText: 'Password',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20))),
+                              obscureText: true,
                     ),
+
+                    if(loginViewmodel.isLoading=true) CircularProgressIndicator(),
+
+                    if(loginViewmodel.errorMessage!=null)
+                      Text(loginViewmodel.errorMessage!, style: TextStyle(color: Colors.red)),
+
+                    ElevatedButton(onPressed: ()
+                    {
+
+                      loginViewmodel.login(emailController.text, passwordController.text);
+
+                    } , 
+                    child:Text('Login')),
+
+
+
+
                     Padding(
                         padding: EdgeInsets.only(top: 20, left: 100),
                         child: Text(
@@ -72,6 +103,7 @@ class LoginScreen extends StatelessWidget {
                           style: TextStyle(color: Colors.white, fontSize: 15),
                         )),
                     SizedBox(height: 60),
+                    
                     Text('ili',
                         style: TextStyle(color: Colors.white, fontSize: 30)),
 
