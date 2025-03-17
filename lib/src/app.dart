@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mojtrsat/views/screens/home_screen.dart';
 import 'package:mojtrsat/views/screens/login_screen.dart';
+import 'package:mojtrsat/views/screens/main_screen.dart';
+import 'package:mojtrsat/views/screens/registration_screen.dart';
+import 'package:mojtrsat/views/screens/settings_screen.dart';
 
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
@@ -70,7 +74,16 @@ class MyApp extends StatelessWidget {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
                   case '/login':
-                    return  LoginScreen();
+                    return const LoginScreen();
+                  case '/registration':
+                    return const RegistrationScreen();
+                  case '/home':
+                    return const HomeScreen();
+                  case '/settings':
+                    return const SettingsScreen();
+                  case '/main':
+                    return const MainScreen();
+
                   default:
                     return  LoginScreen();
                 }

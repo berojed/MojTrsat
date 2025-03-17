@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mojtrsat/data/viewmodels/loginViewmodel.dart';
 import 'package:provider/provider.dart';
+import 'package:mojtrsat/views/screens/home_screen.dart';
+import 'package:mojtrsat/views/screens/main_screen.dart';
+import 'package:mojtrsat/views/screens/registration_screen.dart';
+import 'package:mojtrsat/views/screens/settings_screen.dart';
 
 class LoginScreen extends StatelessWidget {
 
@@ -49,35 +53,37 @@ class LoginScreen extends StatelessWidget {
           ),
           Align(
               alignment: Alignment.center,
-              child: Container(
-                padding: EdgeInsets.all(30),
-                decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 31, 31, 50),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.white)),
-                width: MediaQuery.of(context).size.width * 0.95,
-                height: MediaQuery.of(context).size.height * 0.6,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('Dobrodošli u MojTrsat!', style: TextStyle(color: Colors.white, fontSize: 30),),
-                    SizedBox(height: 50),
-                    
-                    TextField(
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.all(30),
+                  decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 31, 31, 50),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.white)),
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Dobrodošli u MojTrsat!',
+                        style: TextStyle(color: Colors.white, fontSize: 30),
+                      ),
+                      SizedBox(height: 50),
+                      TextField(
                       controller: emailController,
-                      decoration: InputDecoration(
-                          labelText: 'Email',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20))),
-                    ),
-                    SizedBox(height: 20),
-                    TextField(
+                        decoration: InputDecoration(
+                            labelText: 'Email',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                      ),
+                      SizedBox(height: 20),
+                      TextField(
                       controller: passwordController,
-                      decoration: InputDecoration(
-                          labelText: 'Password',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20))),
-                              obscureText: true,
+                        decoration: InputDecoration(
+                            labelText: 'Password',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                                obscureText: true,
                     ),
 
                     if(loginViewmodel.isLoading=true) CircularProgressIndicator(),
@@ -96,49 +102,57 @@ class LoginScreen extends StatelessWidget {
 
 
 
-                    Padding(
-                        padding: EdgeInsets.only(top: 20, left: 100),
-                        child: Text(
-                          'Zaboravili ste lozinku?',
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        )),
-                    SizedBox(height: 60),
+                      Padding(
+                          padding: EdgeInsets.only(top: 20, left: 100),
+                          child: Text(
+                            'Zaboravili ste lozinku?',
+                            style: TextStyle(color: Colors.white, fontSize: 15),
+                          )),
+                      SizedBox(height: 60),
                     
-                    Text('ili',
-                        style: TextStyle(color: Colors.white, fontSize: 30)),
-
-                      
-                        Row(
-
-                          mainAxisSize:MainAxisSize.min ,  
-                          children: [
-                            
-                            
-                            Image.asset('assets/images/google_icon.png',width:60 , height: 60, colorBlendMode: BlendMode.multiply,),
-                            SizedBox(height: 90, width: 200,),
-
-                            Image.asset('assets/images/facebook_logo.jpg',width:60 , height: 60),
-
-                          ],
-                        ),
-                        SizedBox(height: 30,),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            GestureDetector(
-                          
-                              //onTap: {Navigator.push(context, MaterialPageRoute(builder: context => RegistrationScreen());},
-                              child: Text('Kliknite ovdje za registraciju.', style: TextStyle(color: Colors.white, fontStyle: FontStyle.italic),),
-                            )
-                          ],
-                        )
-
-                    
-                  ],
+                      Text('ili',
+                          style: TextStyle(color: Colors.white, fontSize: 30)),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            'assets/images/google_icon.png',
+                            width: 60,
+                            height: 60,
+                            colorBlendMode: BlendMode.multiply,
+                          ),
+                          SizedBox(
+                            height: 90,
+                            width: 200,
+                          ),
+                          Image.asset('assets/images/facebook_logo.jpg',
+                              width: 60, height: 60),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ElevatedButton(
+                              child: Text('Nemaš račun? Klikni ovdje'),
+                              onPressed: () {
+                                _navigateToRegistrationScreen(context);
+                              })
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ))
         ],
       ),
     );
+  }
+
+  void _navigateToRegistrationScreen(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => RegistrationScreen()));
   }
 }
