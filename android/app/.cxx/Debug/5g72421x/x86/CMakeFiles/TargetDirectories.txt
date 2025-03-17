@@ -1,0 +1,2 @@
+C:/Users/Korisnik/Desktop/Lero/development/projekti/moj_trsat_folder/MojTrsat/android/app/.cxx/Debug/5g72421x/x86/CMakeFiles/edit_cache.dir
+C:/Users/Korisnik/Desktop/Lero/development/projekti/moj_trsat_folder/MojTrsat/android/app/.cxx/Debug/5g72421x/x86/CMakeFiles/rebuild_cache.dir
