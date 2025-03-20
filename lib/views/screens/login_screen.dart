@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mojtrsat/data/viewmodels/loginViewmodel.dart';
 import 'package:provider/provider.dart';
-import 'package:mojtrsat/views/screens/home_screen.dart';
-import 'package:mojtrsat/views/screens/main_screen.dart';
-import 'package:mojtrsat/views/screens/registration_screen.dart';
-import 'package:mojtrsat/views/screens/settings_screen.dart';
 
 class LoginScreen extends StatelessWidget {
-
   //controllers for getting email & password from  users input
-  final TextEditingController emailController =TextEditingController();
-  final TextEditingController passwordController=TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   LoginScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-
-    final loginViewmodel= Provider.of<LoginViewmodel>(context);
+    final loginViewmodel = Provider.of<LoginViewmodel>(context);
 
     return Scaffold(
       backgroundColor: Color(0x00121212),
@@ -70,7 +63,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 50),
                       TextField(
-                      controller: emailController,
+                        controller: emailController,
                         decoration: InputDecoration(
                             labelText: 'Email',
                             border: OutlineInputBorder(
@@ -78,30 +71,37 @@ class LoginScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       TextField(
-                      controller: passwordController,
+                        controller: passwordController,
                         decoration: InputDecoration(
                             labelText: 'Password',
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20))),
-                                obscureText: true,
-                    ),
+                        obscureText: true,
+                      ),
+                      if (loginViewmodel.isLoading == true)
+                        CircularProgressIndicator(),
+                      if (loginViewmodel.errorMessage != null)
+                        Text(loginViewmodel.errorMessage!,
+                            style: TextStyle(color: Colors.red)),
+                      ElevatedButton(
+                          onPressed: () async {
+                            final email = emailController.text;
+                            final password = passwordController.text;
 
-                    if(loginViewmodel.isLoading=true) CircularProgressIndicator(),
+                            bool success = await loginViewmodel.login(
+                                context, email, password);
 
-                    if(loginViewmodel.errorMessage!=null)
-                      Text(loginViewmodel.errorMessage!, style: TextStyle(color: Colors.red)),
+                            if (success) {
 
-                    ElevatedButton(onPressed: ()
-                    {
-
-                      loginViewmodel.login(emailController.text, passwordController.text);
-
-                    } , 
-                    child:Text('Login')),
-
-
-
-
+                              Future.delayed(Duration(seconds: 3), () {
+                                Navigator.pushReplacementNamed(
+                                    context, '/home');
+                              });
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login nije uspio.')));
+                            }
+                          },
+                          child: Text('Login')),
                       Padding(
                           padding: EdgeInsets.only(top: 20, left: 100),
                           child: Text(
@@ -109,7 +109,6 @@ class LoginScreen extends StatelessWidget {
                             style: TextStyle(color: Colors.white, fontSize: 15),
                           )),
                       SizedBox(height: 60),
-                    
                       Text('ili',
                           style: TextStyle(color: Colors.white, fontSize: 30)),
                       Row(
@@ -138,7 +137,8 @@ class LoginScreen extends StatelessWidget {
                           ElevatedButton(
                               child: Text('Nemaš račun? Klikni ovdje'),
                               onPressed: () {
-                                _navigateToRegistrationScreen(context);
+                                loginViewmodel
+                                    .navigateToRegistrationScreen(context);
                               })
                         ],
                       )
@@ -149,10 +149,5 @@ class LoginScreen extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  void _navigateToRegistrationScreen(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => RegistrationScreen()));
   }
 }

@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:mojtrsat/data/viewmodels/registrationViewmodel.dart';
 import 'package:mojtrsat/views/screens/login_screen.dart';
+import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatelessWidget {
-  const RegistrationScreen({super.key});
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  RegistrationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final registrationViewmodel = Provider.of<Registrationviewmodel>(context);
+
     return Scaffold(
       backgroundColor: Color(0x00121212),
       body: Stack(
@@ -52,6 +59,7 @@ class RegistrationScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: 50),
                     TextField(
+                      controller: emailController,
                       decoration: InputDecoration(
                           labelText: 'Email',
                           border: OutlineInputBorder(
@@ -59,28 +67,51 @@ class RegistrationScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     TextField(
+                      controller: passwordController,
                       decoration: InputDecoration(
                           labelText: 'Password',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20))),
                     ),
-                    Padding(
-                        padding: EdgeInsets.only(top: 20, left: 100),
-                        child: Text(
-                          'Zaboravili ste lozinku?',
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        )),
                     SizedBox(height: 60),
+                    ElevatedButton(
+                        onPressed: () async {
+                          final email = emailController.text;
+                          final password = passwordController.text;
+                          bool success = await registrationViewmodel.signup(
+                              context, email, password);
+
+                          if (success) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text('Uspješna registracija!')));
+
+                            Future.delayed(Duration(seconds: 1), () {
+                              Navigator.pushReplacementNamed(context, '/home');
+                            });
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text('Registracija nije uspjela.')));
+                          }
+                        },
+                        child: Text('Registracija')),
                     Text('ili',
                         style: TextStyle(color: Colors.white, fontSize: 30)),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Image.asset(
-                          'assets/images/google_icon.png',
-                          width: 60,
-                          height: 60,
-                          colorBlendMode: BlendMode.multiply,
+                        ElevatedButton(
+                          onPressed: () async {
+
+                          registrationViewmodel.signUpWithGoogle();
+
+
+                          },
+                          child: Image.asset(
+                            'assets/images/google_icon.png',
+                            width: 60,
+                            height: 60,
+                            colorBlendMode: BlendMode.multiply,
+                          ),
                         ),
                         SizedBox(
                           height: 90,
@@ -90,29 +121,11 @@ class RegistrationScreen extends StatelessWidget {
                             width: 60, height: 60),
                       ],
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ElevatedButton(
-                            child: Text('Već imaš račun? Klikni ovdje'),
-                            onPressed: () {
-                              _navigateToLoginScreen(context);
-                            })
-                      ],
-                    )
                   ],
                 ),
               ))
         ],
       ),
     );
-  }
-
-  void _navigateToLoginScreen(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 }
