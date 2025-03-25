@@ -92,11 +92,9 @@ class LoginScreen extends StatelessWidget {
                                 context, email, password);
 
                             if (success) {
-
-                              Future.delayed(Duration(seconds: 3), () {
                                 Navigator.pushReplacementNamed(
                                     context, '/home');
-                              });
+                              
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login nije uspio.')));
                             }

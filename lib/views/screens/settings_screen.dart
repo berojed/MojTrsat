@@ -28,7 +28,7 @@ class SettingsScreen extends StatelessWidget {
                 CircleAvatar(
                   radius: 40,
                   backgroundImage:
-                      AssetImage('assets/images/profile_picture.png'),
+                      AssetImage('assets/images/flutter_logo.png'),
                 ),
                 SizedBox(width: 16),
                 Column(
@@ -116,25 +116,6 @@ class SettingsScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Account',
-          ),
-        ],
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mojtrsat/data/viewmodels/registrationViewmodel.dart';
-import 'package:mojtrsat/views/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatelessWidget {
