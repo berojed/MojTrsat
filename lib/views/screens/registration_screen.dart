@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mojtrsat/data/viewmodels/registrationViewmodel.dart';
+import 'package:mojtrsat/viewmodels/registrationViewmodel.dart';
 import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatelessWidget {
@@ -101,9 +101,6 @@ class RegistrationScreen extends StatelessWidget {
                         ElevatedButton(
                           onPressed: () async {
 
-                          registrationViewmodel.signUpWithGoogle();
-
-
                           },
                           child: Image.asset(
                             'assets/images/google_icon.png',
@@ -114,7 +111,7 @@ class RegistrationScreen extends StatelessWidget {
                         ),
                         SizedBox(
                           height: 90,
-                          width: 200,
+                          width: 90,
                         ),
                         Image.asset('assets/images/facebook_logo.jpg',
                             width: 60, height: 60),

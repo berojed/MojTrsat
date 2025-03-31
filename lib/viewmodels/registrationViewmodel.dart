@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mojtrsat/data/repositories/auth_repository.dart';
-import 'package:mojtrsat/views/screens/registration_screen.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class LoginViewmodel extends ChangeNotifier {
+
+class Registrationviewmodel extends ChangeNotifier {
   final AuthRepository authRepository;
+  final SupabaseClient supabaseClient = Supabase.instance.client;
 
-  LoginViewmodel({required this.authRepository});
+  Registrationviewmodel({required this.authRepository});
 
   bool isLoading = false;
   String? errorMessage;
 
-  Future<bool> login(
+  Future<bool> signup(
       BuildContext context, String email, String password) async {
     //myb needs getters and setters needed for this
     isLoading = true;
@@ -19,13 +23,10 @@ class LoginViewmodel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await authRepository.signIn(email, password);
+      final response = await authRepository.signUp(email, password);
 
       return response?.user != null;
-    } 
-    
-    //failed login
-    catch (e) {
+    } catch (e) {
       throw errorMessage.toString();
     } finally {
       isLoading = false;
@@ -33,8 +34,7 @@ class LoginViewmodel extends ChangeNotifier {
     }
   }
 
-  void navigateToRegistrationScreen(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => RegistrationScreen()));
-  }
+
+
+
 }

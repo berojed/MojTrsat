@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mojtrsat/data/viewmodels/loginViewmodel.dart';
+import 'package:mojtrsat/viewmodels/loginViewmodel.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -48,7 +48,7 @@ class LoginScreen extends StatelessWidget {
               alignment: Alignment.center,
               child: SingleChildScrollView(
                 child: Container(
-                  padding: EdgeInsets.all(30),
+                  padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 31, 31, 50),
                       borderRadius: BorderRadius.circular(20),
@@ -63,6 +63,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 50),
                       TextField(
+                        style: TextStyle(color: Colors.white),
                         controller: emailController,
                         decoration: InputDecoration(
                             labelText: 'Email',
@@ -77,6 +78,7 @@ class LoginScreen extends StatelessWidget {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20))),
                         obscureText: true,
+                        style: TextStyle(color: Colors.white),
                       ),
                       if (loginViewmodel.isLoading == true)
                         CircularProgressIndicator(),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mojtrsat/data/repositories/auth_repository.dart';
-import 'package:mojtrsat/data/viewmodels/homeViewModel.dart';
-import 'package:mojtrsat/data/viewmodels/loginViewmodel.dart';
-import 'package:mojtrsat/data/viewmodels/registrationViewmodel.dart';
+import 'package:mojtrsat/viewmodels/homeViewModel.dart';
+import 'package:mojtrsat/viewmodels/loginViewmodel.dart';
+import 'package:mojtrsat/viewmodels/registrationViewmodel.dart';
 import 'package:mojtrsat/src/app.dart';
 
 import 'package:provider/provider.dart';
@@ -23,7 +23,7 @@ void main() async {
       ChangeNotifierProvider(
           create: (context) =>
               Registrationviewmodel(authRepository: AuthRepository())),
-      ChangeNotifierProvider(create: (_) => Homeviewmodel())
+      ChangeNotifierProvider(create: (context) => HomeViewModel()),
     ],
     child: MyApp(),
   ));
