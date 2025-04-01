@@ -1,4 +1,4 @@
-# mojtrsat
+# MojTrsat
 
 A new Flutter project designed to enhance student life at Trsat dormitory in Rijeka.
 
@@ -18,10 +18,7 @@ samples, guidance on mobile development, and a full API reference.
 
 - **Flutter** (Dart)
 - **Supabase** (Backend & Authentication)
-- **Provider** (State Management)
-- **Firebase Realtime Database**
-- **Google Maps API** (for location-based features)
-- **Lottie Animations** (for UI enhancements)
+- **RiverPod** (State Management)
 
 ## Features
 
@@ -33,23 +30,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Screenshots
 
-| Home Screen | Laundry Booking | Gym Membership |
+Login Screen  | Home Screen | Settings Screen |
 |------------|----------------|---------------|
-| ![Home](assets/images/home.png) | ![Laundry](assets/images/laundry.png) | ![Gym](assets/images/gym.png) |
-
-## Assets
-
-The `assets` directory houses images, fonts, and any other files you want to
-include with your application.
-
-The `assets/images` directory contains [resolution-aware
-images](https://flutter.dev/to/resolution-aware-images).
-
-## Localization
-
-This project generates localized messages based on arb files found in
-the `lib/src/localization` directory.
-
-To support additional languages, please visit the tutorial on
-[Internationalizing Flutter apps](https://flutter.dev/to/internationalization).
+| ![Login](assets\app_screenshots\loginScreen.png) | ![Home](assets\app_screenshots\homeScreen.png)  | ![Settings](assets\app_screenshots\settingsScreen.png) |
 
