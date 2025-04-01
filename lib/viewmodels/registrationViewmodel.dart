@@ -1,40 +1,29 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mojtrsat/data/repositories/auth_repository.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:provider/provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-
-class Registrationviewmodel extends ChangeNotifier {
+class RegistrationViewModel extends StateNotifier<bool> {
   final AuthRepository authRepository;
-  final SupabaseClient supabaseClient = Supabase.instance.client;
 
-  Registrationviewmodel({required this.authRepository});
+  RegistrationViewModel(this.authRepository) : super(false);
 
   bool isLoading = false;
   String? errorMessage;
 
-  Future<bool> signup(
-      BuildContext context, String email, String password) async {
-    //myb needs getters and setters needed for this
+  Future<bool> signup(String email, String password) async {
     isLoading = true;
     errorMessage = null;
-
-    notifyListeners();
+    state = true;
 
     try {
       final response = await authRepository.signUp(email, password);
-
-      return response?.user != null;
+      state = response?.user != null;
+      return state;
     } catch (e) {
-      throw errorMessage.toString();
+      errorMessage = e.toString();
+      state = false;
+      return false;
     } finally {
       isLoading = false;
-      notifyListeners();
     }
   }
-
-
-
-
 }

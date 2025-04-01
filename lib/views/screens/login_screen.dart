@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:mojtrsat/viewmodels/loginViewmodel.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mojtrsat/viewmodels/providers.dart';
 
-class LoginScreen extends StatelessWidget {
-  //controllers for getting email & password from  users input
+class LoginScreen extends ConsumerWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final loginViewmodel = Provider.of<LoginViewmodel>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final loginViewModel = ref.watch(loginViewModelProvider.notifier);
+    final isLoading = ref.watch(loginViewModelProvider);
 
     return Scaffold(
-      backgroundColor: Color(0x00121212),
+      backgroundColor: const Color(0x00121212),
       body: Stack(
         children: [
           Image.asset('assets/images/kampus-rijeka38.jpg',
@@ -22,21 +23,21 @@ class LoginScreen extends StatelessWidget {
               width: double.infinity,
               height: double.infinity),
           Container(
-            color: Color.fromARGB(176, 102, 27, 97),
+            color: const Color.fromARGB(176, 102, 27, 97),
           ),
           Align(
             alignment: Alignment.topCenter,
             child: Padding(
-                padding: EdgeInsets.only(top: 80, left: 80),
+                padding: const EdgeInsets.only(top: 80, left: 80),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('MojTrsat',
+                    const Text('MojTrsat',
                         style: TextStyle(
                             fontSize: 40,
                             color: Colors.black,
                             fontWeight: FontWeight.bold)),
-                    Padding(
+                    const Padding(
                         padding: EdgeInsets.only(left: 100),
                         child: Text('Za lakši život na Trsatu',
                             style:
@@ -48,29 +49,29 @@ class LoginScreen extends StatelessWidget {
               alignment: Alignment.center,
               child: SingleChildScrollView(
                 child: Container(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 31, 31, 50),
+                      color: const Color.fromARGB(255, 31, 31, 50),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(color: Colors.white)),
                   width: MediaQuery.of(context).size.width * 0.95,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
+                      const Text(
                         'Dobrodošli u MojTrsat!',
                         style: TextStyle(color: Colors.white, fontSize: 30),
                       ),
-                      SizedBox(height: 50),
+                      const SizedBox(height: 50),
                       TextField(
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         controller: emailController,
                         decoration: InputDecoration(
                             labelText: 'Email',
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20))),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextField(
                         controller: passwordController,
                         decoration: InputDecoration(
@@ -78,39 +79,48 @@ class LoginScreen extends StatelessWidget {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20))),
                         obscureText: true,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                       ),
-                      if (loginViewmodel.isLoading == true)
-                        CircularProgressIndicator(),
-                      if (loginViewmodel.errorMessage != null)
-                        Text(loginViewmodel.errorMessage!,
-                            style: TextStyle(color: Colors.red)),
+                      if (isLoading)
+                        const CircularProgressIndicator(),
+                      if (loginViewModel.errorMessage != null)
+                        Text(loginViewModel.errorMessage!,
+                            style: const TextStyle(color: Colors.red)),
+                      const SizedBox(height: 20),
                       ElevatedButton(
                           onPressed: () async {
                             final email = emailController.text;
                             final password = passwordController.text;
 
-                            bool success = await loginViewmodel.login(
-                                context, email, password);
+                            try {
+                               bool success =
+                                await loginViewModel.login(email, password);
 
                             if (success) {
-                                Navigator.pushReplacementNamed(
-                                    context, '/home');
-                              
+                              context.go('/home'); // Navigacija pomoću GoRouter
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login nije uspio.')));
+                              
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Login nije uspio.')));
                             }
+                            } catch (e) {
+                              print(e.toString());
+                            }
+
+                           
                           },
-                          child: Text('Login')),
+                          child: const Text('Login')),
                       Padding(
-                          padding: EdgeInsets.only(top: 20, left: 100),
-                          child: Text(
+                          padding: const EdgeInsets.only(top: 20, left: 180),
+                          child: const Text(
                             'Zaboravili ste lozinku?',
-                            style: TextStyle(color: Colors.white, fontSize: 15),
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 15),
                           )),
-                      SizedBox(height: 60),
-                      Text('ili',
-                          style: TextStyle(color: Colors.white, fontSize: 30)),
+                      const SizedBox(height: 30),
+                      const Text('ili',
+                          style: TextStyle(color: Colors.white, fontSize: 24)),
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -120,25 +130,26 @@ class LoginScreen extends StatelessWidget {
                             height: 60,
                             colorBlendMode: BlendMode.multiply,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 90,
-                            width: 200,
+                            width: 130,
                           ),
-                          Image.asset('assets/images/facebook_logo.jpg',
-                              width: 60, height: 60),
+                          Image.asset(
+                            'assets/images/facebook_logo.png',
+                            width: 60,
+                            height: 60,
+                            colorBlendMode: BlendMode.multiply,
+                          )
                         ],
                       ),
-                      SizedBox(
-                        height: 30,
-                      ),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           ElevatedButton(
-                              child: Text('Nemaš račun? Klikni ovdje'),
+                              child: const Text('Nemaš račun? Klikni ovdje'),
                               onPressed: () {
-                                loginViewmodel
-                                    .navigateToRegistrationScreen(context);
+                                context.go('/registration'); // Navigacija na registraciju
                               })
                         ],
                       )

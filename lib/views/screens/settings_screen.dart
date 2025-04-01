@@ -39,7 +39,7 @@ class SettingsScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                     Text(
-                      'Soba: 4070, 1 paviljon',
+                      'Soba: 407D, 1 paviljon',
                       style: TextStyle(color: Colors.white, fontSize: 14),
                     ),
                     Text(
