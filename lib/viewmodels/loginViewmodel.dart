@@ -1,39 +1,31 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mojtrsat/data/repositories/auth_repository.dart';
-import 'package:mojtrsat/views/screens/registration_screen.dart';
 
-class LoginViewmodel extends ChangeNotifier {
+class LoginViewModel extends StateNotifier<bool> {
   final AuthRepository authRepository;
 
-  LoginViewmodel({required this.authRepository});
+  LoginViewModel(this.authRepository) : super(false);
 
   bool isLoading = false;
   String? errorMessage;
 
-  Future<bool> login(
-      BuildContext context, String email, String password) async {
+  Future<bool> login(String email, String password) async {
     isLoading = true;
     errorMessage = null;
-
-    notifyListeners();
+    state = true;
 
     try {
       final response = await authRepository.signIn(email, password);
-
-      return response?.user != null;
-    } 
-    
-    //failed login
-    catch (e) {
-      throw errorMessage.toString();
+      state = response?.user != null;
+      return state;
+    } catch (e) {
+      errorMessage = e.toString();
+      state = false;
+      return false;
     } finally {
       isLoading = false;
-      notifyListeners();
     }
   }
 
-  void navigateToRegistrationScreen(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => RegistrationScreen()));
-  }
+
 }

@@ -1,31 +1,28 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mojtrsat/data/models/canteen.dart';
-import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class HomeViewModel extends ChangeNotifier {
-  final SupabaseClient _supabase = Supabase.instance.client;
-  
-  Canteen? _canteen; 
+class HomeViewModel extends StateNotifier<AsyncValue<Canteen?>> {
+  final SupabaseClient _supabase;
 
-  Canteen? get canteen => _canteen; 
+  HomeViewModel(this._supabase) : super(const AsyncValue.loading()) {
+    getCanteen();
+  }
 
   Future<void> getCanteen() async {
     try {
       final response = await _supabase.from('canteen').select().eq('canteen_id', 1);
-      
       if (response.isNotEmpty) {
-        _canteen = Canteen.fromMap(response.first);
-        print('ovo je response ${response}');
-        notifyListeners(); 
+        final canteen = Canteen.fromMap(response.first);
+        state = AsyncValue.data(canteen);
+      } else {
+        state = const AsyncValue.data(null);
       }
     } catch (error) {
-      print("Greška pri dohvaćanju kantine: $error");
+      state = AsyncValue.error(error, StackTrace.current);
     }
   }
-
 }
-
-
 
 
 
