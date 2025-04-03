@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:mojtrsat/data/viewmodels/registrationViewmodel.dart';
-import 'package:mojtrsat/views/screens/login_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mojtrsat/viewmodels/providers.dart';
 
-class RegistrationScreen extends StatelessWidget {
+class RegistrationScreen extends ConsumerWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   RegistrationScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final registrationViewmodel = Provider.of<Registrationviewmodel>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final registrationViewModel = ref.watch(registrationViewModelProvider.notifier);
+    final isLoading = ref.watch(registrationViewModelProvider);
 
     return Scaffold(
       backgroundColor: Color(0x00121212),
@@ -78,8 +78,8 @@ class RegistrationScreen extends StatelessWidget {
                         onPressed: () async {
                           final email = emailController.text;
                           final password = passwordController.text;
-                          bool success = await registrationViewmodel.signup(
-                              context, email, password);
+                          bool success = await registrationViewModel.signup(
+                              email, password);
 
                           if (success) {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -99,26 +99,19 @@ class RegistrationScreen extends StatelessWidget {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        ElevatedButton(
-                          onPressed: () async {
-
-                          registrationViewmodel.signUpWithGoogle();
-
-
-                          },
-                          child: Image.asset(
+                        Image.asset(
                             'assets/images/google_icon.png',
                             width: 60,
                             height: 60,
                             colorBlendMode: BlendMode.multiply,
                           ),
-                        ),
+                       
                         SizedBox(
-                          height: 90,
-                          width: 200,
+                          height: 60,
+                          width: 60,
                         ),
-                        Image.asset('assets/images/facebook_logo.jpg',
-                            width: 60, height: 60),
+                        Image.asset('assets/images/facebook_logo.png',
+                            width: 60, height: 60, colorBlendMode: BlendMode.multiply,),
                       ],
                     ),
                   ],

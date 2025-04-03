@@ -1,29 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:mojtrsat/views/screens/login_screen.dart';
-import 'package:mojtrsat/views/screens/home_screen.dart';
-import 'package:mojtrsat/views/screens/main_screen.dart';
+import 'package:mojtrsat/views/widgets/bottom_nav_bar.dart';
+import 'package:mojtrsat/views/screens/canteen_screen.dart';
 import 'package:mojtrsat/views/screens/registration_screen.dart';
 import 'package:mojtrsat/views/screens/settings_screen.dart';
+import 'package:go_router/go_router.dart';
 
 
-/// The Widget that configures your application.
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+   MyApp({super.key});
+
+  final _router = GoRouter(
+    initialLocation: '/login',
+  routes: [
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => LoginScreen()
+    ),
+    GoRoute(
+      path: '/registration',
+      builder: (context, state) => RegistrationScreen()
+    ),
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => BottomNavigation()
+    ),
+    GoRoute(
+      path: '/settings',
+      builder: (context, state) => SettingsScreen()
+    ),
+    GoRoute(
+      path: '/canteen',
+      builder: (context, state) => CanteenScreen()
+    ),
+  ],
+);
+
+
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(),
-      darkTheme: ThemeData.dark(),
-      initialRoute: '/login',
-      home: LoginScreen(),
-      routes: {
-        '/login': (context) => LoginScreen(),
-        '/registration': (context) => RegistrationScreen(),
-        '/home': (context) => const HomeScreen(),
-        '/main': (context) => const MainScreen(),
-        '/settings': (context) => const SettingsScreen(),
-      },
+    return MaterialApp.router(
+      routerConfig: _router,
+      debugShowCheckedModeBanner: false,
+
     );
   }
 }

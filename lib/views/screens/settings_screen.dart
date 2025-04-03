@@ -6,9 +6,9 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Color(0xFF121212),
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Color(0xFF121212),
         title: Text('Moj račun'),
         actions: [
           IconButton(
@@ -28,7 +28,7 @@ class SettingsScreen extends StatelessWidget {
                 CircleAvatar(
                   radius: 40,
                   backgroundImage:
-                      AssetImage('assets/images/profile_picture.png'),
+                      AssetImage('assets/images/flutter_logo.png'),
                 ),
                 SizedBox(width: 16),
                 Column(
@@ -39,7 +39,7 @@ class SettingsScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                     Text(
-                      'Soba: 4070, 1 paviljon',
+                      'Soba: 407D, 1 paviljon',
                       style: TextStyle(color: Colors.white, fontSize: 14),
                     ),
                     Text(
@@ -116,25 +116,6 @@ class SettingsScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Account',
-          ),
-        ],
       ),
     );
   }
