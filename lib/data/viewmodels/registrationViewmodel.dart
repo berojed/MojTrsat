@@ -33,29 +33,27 @@ class Registrationviewmodel extends ChangeNotifier {
   }
 
   Future<void> signUpWithGoogle() async {
-//scopes which determine data that user can share with app
-    const List<String> scopes = <String>['email'];
+    /// Web Client ID that you registered with Google Cloud.
+    const webClientId =
+        '358673529123-ck47qdtr2tvp6b8msv56daj2a37uconm.apps.googleusercontent.com';
 
-    GoogleSignIn _googleSignIn = GoogleSignIn(scopes: scopes);
-
-    try {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-
-      //user gave up while signing up with google
-      if (googleUser == null) {
-        return;
-      }
-
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleUser.authentication;
-      final String? googleToken = googleSignInAuthentication.idToken;
-
-      if (googleToken != null) {
-        final response = await supabaseClient.auth.signInWithIdToken(
-            provider: OAuthProvider.google, idToken: googleToken);
-      }
-    } catch (e) {
-      
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      serverClientId: webClientId,
+    );
+    final googleUser = await googleSignIn.signIn();
+    final googleAuth = await googleUser!.authentication;
+    final accessToken = googleAuth.accessToken;
+    final idToken = googleAuth.idToken;
+    if (accessToken == null) {
+      throw 'No Access Token found.';
     }
+    if (idToken == null) {
+      throw 'No ID Token found.';
+    }
+    await supabaseClient.auth.signInWithIdToken(
+      provider: OAuthProvider.google,
+      idToken: idToken,
+      accessToken: accessToken,
+    );
   }
 }
