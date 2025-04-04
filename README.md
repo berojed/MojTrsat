@@ -22,11 +22,11 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Features
 
-- 📅 **Book laundry slots** to avoid waiting in queues.
-- 💪 **Purchase and manage gym memberships** directly from the app.
-- 🍽️ **Track meal expenses** and view canteen working hours.
-- 🏠 **Find important dormitory information** and announcements.
-- 🌍 **Support for Erasmus students** with essential local tips.
+- **Book laundry slots** to avoid waiting in queues.
+- **Purchase and manage gym memberships** directly from the app.
+- **Track meal expenses** and view canteen working hours.
+- **Find important dormitory information** and announcements.
+- **Support for Erasmus students** with essential local tips.
 
 ## Screenshots
 

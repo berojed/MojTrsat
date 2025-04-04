@@ -7,7 +7,7 @@ class CanteenScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final canteenAsync = ref.watch(homeViewModelProvider);
+    final canteenAsync = ref.watch(canteenViewModelProvider);
 
     return Scaffold(
       backgroundColor: Color(0xFF121212),

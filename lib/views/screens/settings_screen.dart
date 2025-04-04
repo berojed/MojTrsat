@@ -14,7 +14,7 @@ class SettingsScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.exit_to_app),
             onPressed: () {
-              // Add your logout logic here
+              
             },
           ),
         ],
@@ -56,7 +56,7 @@ class SettingsScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.edit, color: Colors.blue),
                   onPressed: () {
-                    // Add your edit profile logic here
+                    
                   },
                 ),
               ],
@@ -66,14 +66,14 @@ class SettingsScreen extends StatelessWidget {
               leading: Icon(Icons.inbox, color: Colors.white),
               title: Text('Inbox', style: TextStyle(color: Colors.white)),
               onTap: () {
-                // Add your navigation logic here
+                
               },
             ),
             ListTile(
               leading: Icon(Icons.payment, color: Colors.white),
               title: Text('Plaćanja', style: TextStyle(color: Colors.white)),
               onTap: () {
-                // Add your navigation logic here
+                
               },
             ),
             ListTile(
@@ -81,7 +81,7 @@ class SettingsScreen extends StatelessWidget {
               title:
                   Text('Prijavi štetu', style: TextStyle(color: Colors.white)),
               onTap: () {
-                // Add your navigation logic here
+                
               },
             ),
             Divider(color: Colors.white),
@@ -90,28 +90,28 @@ class SettingsScreen extends StatelessWidget {
               title: Text('Postavke aplikacije',
                   style: TextStyle(color: Colors.white)),
               onTap: () {
-                // Add your navigation logic here
+                
               },
             ),
             ListTile(
               leading: Icon(Icons.help, color: Colors.white),
               title: Text('FAQ', style: TextStyle(color: Colors.white)),
               onTap: () {
-                // Add your navigation logic here
+                
               },
             ),
             ListTile(
               leading: Icon(Icons.language, color: Colors.white),
               title: Text('Jezik', style: TextStyle(color: Colors.white)),
               onTap: () {
-                // Add your navigation logic here
+                
               },
             ),
             ListTile(
               leading: Icon(Icons.support, color: Colors.white),
               title: Text('Podrška', style: TextStyle(color: Colors.white)),
               onTap: () {
-                // Add your navigation logic here
+                
               },
             ),
           ],

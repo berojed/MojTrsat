@@ -11,7 +11,6 @@ class RegistrationScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final registrationViewModel = ref.watch(registrationViewModelProvider.notifier);
-    final isLoading = ref.watch(registrationViewModelProvider);
 
     return Scaffold(
       backgroundColor: Color(0x00121212),
