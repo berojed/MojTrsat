@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mojtrsat/viewmodels/providers.dart';
+import 'package:mojtrsat/views/widgets/news_card.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -14,12 +15,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(homeViewModelProvider.notifier).getCanteen();
+    // displaying canteen data and news articles when the screen is initialized
+    ref.read(canteenViewModelProvider.notifier).getCanteen();
+    ref.read(newsViewModelProvider.notifier).getNews();
   }
 
   @override
   Widget build(BuildContext context) {
-    final canteenAsync = ref.watch(homeViewModelProvider);
+    final canteenes = ref.watch(canteenViewModelProvider);
 
     return Scaffold(
       backgroundColor: Color(0xFF121212),
@@ -82,7 +85,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16)),
-                          canteenAsync.when(
+                          canteenes.when(
                             data: (canteen) => canteen != null
                                 ? Padding(
                                     padding: const EdgeInsets.only(
@@ -110,7 +113,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16)),
-                          canteenAsync.when(
+                          canteenes.when(
                             data: (canteen) => canteen != null
                                 ? Padding(
                                     padding: const EdgeInsets.only(top: 8),
@@ -193,7 +196,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   child: Text(
                     time,
                     style: TextStyle(
-                        color: color, fontSize: 14, fontWeight: FontWeight.bold),
+                        color: color,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
                   ))
             ],
           ),
@@ -203,8 +208,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Widget _buildNewsCard(BuildContext context) {
+    final news = ref.watch(newsViewModelProvider);
+
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: MediaQuery.of(context).size.height * 0.47,
       width: MediaQuery.of(context).size.width,
       child: Card(
         color: Color(0xFF1E1E1E),
@@ -215,21 +222,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
-                  "assets/images/flutter_logo.png",
-                  width: 50,
-                  height: 50,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(width: 12),
+
+              //so that the text is not cut off
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       "Vijesti",
                       style: TextStyle(
                         color: Colors.white,
@@ -237,24 +236,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 34),
-                    RichText(
-                      text: const TextSpan(
-                        style: TextStyle(color: Colors.white, fontSize: 12),
-                        children: [
-                          TextSpan(
-                              text: "Porast minimalne studentske satnice s "),
-                          TextSpan(
-                            text: "5.5\$ na 6.06\$ od 1.1.2025. ",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                            text: "Više",
-                            style: TextStyle(fontStyle: FontStyle.italic),
-                          ),
-                        ],
-                      ),
-                    ),
+                    Expanded(
+                        child: news.isEmpty
+                            ? Text(
+                                "No news available",
+                                style: TextStyle(color: Colors.white),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.all(2),
+                                child: ListView.builder(
+                                  itemCount: news.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Padding(
+                                        padding: const EdgeInsets.all(5),
+                                        child: NewsCard(
+                                            title: news[index]!.title,
+                                            link: news[index]!.link,
+                                            imageUrl: news[index]!.imageUrl));
+                                  },
+                                ),
+                              )),
                   ],
                 ),
               ),
