@@ -6,7 +6,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Color(0xFF121212),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
