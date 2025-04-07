@@ -13,24 +13,16 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
 
   final _router = GoRouter(
-    initialLocation: '/main/reservations/laundry',
+    initialLocation: '/login',
     routes: [
       GoRoute(path: '/login', builder: (context, state) => LoginScreen()),
-      GoRoute(
-          path: '/registration',
-          builder: (context, state) => RegistrationScreen()),
+      GoRoute(path: '/registration', builder: (context, state) => RegistrationScreen()),
       GoRoute(path: '/home', builder: (context, state) => BottomNavigation()),
       GoRoute(path: '/settings', builder: (context, state) => SettingsScreen()),
       GoRoute(path: '/canteen', builder: (context, state) => CanteenScreen()),
       GoRoute(path: '/main', builder: (context, state) => MainScreen()),
-      GoRoute(
-        path: '/main/reservations',
-        builder: (context, state) => ReservationsScreen(),
-      ),
-      GoRoute(
-        path: '/main/reservations/laundry',
-        builder: (context, state) => LaundryScreen(),
-      )
+      GoRoute(path: '/main/reservations', builder: (context, state) => ReservationsScreen(),),
+      GoRoute(path: '/main/reservations/laundry', builder: (context, state) => LaundryScreen(),)
     ],
   );
 

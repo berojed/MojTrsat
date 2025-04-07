@@ -32,5 +32,5 @@ samples, guidance on mobile development, and a full API reference.
 
 Login Screen  | Home Screen | Settings Screen |
 |------------|----------------|---------------|
-| ![Login](assets\app_screenshots\loginScreen.png) | ![Home](assets\app_screenshots\homeScreen.png)  | ![Settings](assets\app_screenshots\settingsScreen.png) |
+| [![login-Screen.png](https://i.postimg.cc/pLLbBVRK/login-Screen.png)](https://postimg.cc/YhZsrH4S)| ![Home][![home-Screen.png](https://i.postimg.cc/kgT9r6fj/home-Screen.png)](https://postimg.cc/mP1KCDxM) | [![main-Screen.png](https://i.postimg.cc/q7grpJFp/main-Screen.png)](https://postimg.cc/67sg0XwP)  | [![settings-Screen.png](https://i.postimg.cc/1X0hvf8r/settings-Screen.png)](https://postimg.cc/H8LhxW4r)|
 

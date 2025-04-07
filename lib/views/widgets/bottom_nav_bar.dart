@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:mojtrsat/views/screens/home_screen.dart';
+import 'package:mojtrsat/views/screens/main_screen.dart';
 import 'package:mojtrsat/views/screens/settings_screen.dart';
 
 class BottomNavigationNotifier extends StateNotifier<int> {
@@ -27,6 +28,7 @@ class BottomNavigation extends ConsumerWidget {
     // Screens for bottom nav bar
     final List<Widget> pages = [
       HomeScreen(),
+      MainScreen(),
       SettingsScreen(),
     ];
 
@@ -42,6 +44,7 @@ class BottomNavigation extends ConsumerWidget {
             height: 60,
             items: <Widget>[
               Icon(Icons.home, size: 30, color: Colors.black),
+              Icon(Icons.dashboard_sharp, size: 30, color: Colors.black),
               Icon(Icons.settings, size: 30, color: Colors.black),
             ],
             index: selectedIndex,

@@ -1,105 +1,109 @@
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.apartment), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'MojTrsat',
-              style: TextStyle(
-                  fontSize: 28,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'MojTrsat usluge',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 35,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white),
-            ),
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.grey[900],
-                borderRadius: BorderRadius.circular(12),
+                ),
               ),
-              child: const Text(
-                'Rezervacija termina pranja veša, opreme i ostalih usluga',
-                style: TextStyle(fontSize: 16, color: Colors.white),
+              const SizedBox(height: 24),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Color(0xFF1C1C1C),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Text(
+                  'Rezervacija termina pranja veša, opreme i ostalih usluga',
+                  style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-                children: const [
-                  CategoryCard(
+              const SizedBox(height: 24),
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  children: const [
+                    _FeatureCard(
                       title: 'Teretana',
-                      subtitle:
-                          'Stvaranje, upravljanje i mijenjanje članarine'),
-                  CategoryCard(
+                      description: 'Stvaranje, upravljanje i mijenjanje članarine',
+                    ),
+                    _FeatureCard(
                       title: 'Plaćanja',
-                      subtitle:
-                          'Plati stanarinu, članarinu za teretanu, kredite za pranje veša i ostalo'),
-                  CategoryCard(
+                      description: 'Plati stanarinu, članarinu za teretanu, kredite za pranje veša i ostalo',
+                    ),
+                    _FeatureCard(
                       title: 'Eventovi',
-                      subtitle: 'Skupi ekipu iz doma i organiziraj druženja'),
-                  CategoryCard(
+                      description: 'Skupi ekipu iz doma i organiziraj druženja',
+                    ),
+                    _FeatureCard(
                       title: 'Chat',
-                      subtitle:
-                          'Svoja pitanja proslijedi zaposlenima u Studentskom centru'),
-                ],
-              ),
-            ),
-          ],
+                      description: 'Svoja pitanja proslijedi zaposlenima u Studentskom centru',
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class CategoryCard extends StatelessWidget {
+class _FeatureCard extends StatelessWidget {
   final String title;
-  final String subtitle;
+  final String description;
 
-  const CategoryCard({super.key, required this.title, required this.subtitle});
+  const _FeatureCard({
+    required this.title,
+    required this.description,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.grey[900],
-        borderRadius: BorderRadius.circular(12),
+        color: Color(0xFF1C1C1C),
+        borderRadius: BorderRadius.circular(16),
       ),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
             style: const TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+              color: Colors.white,
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
-            subtitle,
-            style: const TextStyle(fontSize: 14, color: Colors.white70),
-          ),
+            description,
+            style: const TextStyle(
+              color: Colors.white60,
+              fontSize: 15,
+            ),
+          )
         ],
       ),
     );
