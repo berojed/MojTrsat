@@ -30,7 +30,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Screenshots
 
-Login Screen  | Home Screen | Settings Screen |
-|------------|----------------|---------------|
-| [![login-Screen.png](https://i.postimg.cc/pLLbBVRK/login-Screen.png)](https://postimg.cc/YhZsrH4S)| ![Home][![home-Screen.png](https://i.postimg.cc/kgT9r6fj/home-Screen.png)](https://postimg.cc/mP1KCDxM) | [![main-Screen.png](https://i.postimg.cc/q7grpJFp/main-Screen.png)](https://postimg.cc/67sg0XwP)  | [![settings-Screen.png](https://i.postimg.cc/1X0hvf8r/settings-Screen.png)](https://postimg.cc/H8LhxW4r)|
+Login Screen  | Home Screen | MainScreen | Settings Screen |
+|------------|----------------|----------------|---------------|
+| [![login-Screen.png](https://i.postimg.cc/pLLbBVRK/login-Screen.png)](https://postimg.cc/YhZsrH4S)| [![home-Screen.png](https://i.postimg.cc/kgT9r6fj/home-Screen.png)](https://postimg.cc/mP1KCDxM) | [![main-Screen.png](https://i.postimg.cc/q7grpJFp/main-Screen.png)](https://postimg.cc/67sg0XwP)  | [![settings-Screen.png](https://i.postimg.cc/1X0hvf8r/settings-Screen.png)](https://postimg.cc/H8LhxW4r)|
 
