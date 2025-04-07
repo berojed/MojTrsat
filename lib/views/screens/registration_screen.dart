@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mojtrsat/viewmodels/providers.dart';
+import 'package:mojtrsat/viewmodels/registrationViewmodel.dart';
 
 class RegistrationScreen extends ConsumerWidget {
   final TextEditingController emailController = TextEditingController();
@@ -10,7 +12,8 @@ class RegistrationScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final registrationViewModel = ref.watch(registrationViewModelProvider.notifier);
+    final registrationViewModel =
+        ref.watch(registrationViewModelProvider.notifier);
 
     return Scaffold(
       backgroundColor: Color(0x00121212),
@@ -98,19 +101,40 @@ class RegistrationScreen extends ConsumerWidget {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Image.asset(
+                        GestureDetector(
+                          onTap: () async {
+                            try {
+                              final isSignedIn = await registrationViewModel
+                                  .isGoogleSignedIn();
+                              if (!isSignedIn) {
+                                await registrationViewModel.signUpWithGoogle();
+                              }
+                              context.go('/home');
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                        'Error during Google sign-up: $e')),
+                              );
+                            }
+                          },
+                          child: Image.asset(
                             'assets/images/google_icon.png',
                             width: 60,
                             height: 60,
                             colorBlendMode: BlendMode.multiply,
                           ),
-                       
+                        ),
                         SizedBox(
                           height: 60,
                           width: 60,
                         ),
-                        Image.asset('assets/images/facebook_logo.png',
-                            width: 60, height: 60, colorBlendMode: BlendMode.multiply,),
+                        Image.asset(
+                          'assets/images/facebook_logo.png',
+                          width: 60,
+                          height: 60,
+                          colorBlendMode: BlendMode.multiply,
+                        ),
                       ],
                     ),
                   ],

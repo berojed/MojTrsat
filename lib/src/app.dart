@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mojtrsat/views/screens/home_screen.dart';
 import 'package:mojtrsat/views/screens/laundry_screen.dart';
 import 'package:mojtrsat/views/screens/login_screen.dart';
 import 'package:mojtrsat/views/screens/main_screen.dart';
@@ -16,13 +17,21 @@ class MyApp extends StatelessWidget {
     initialLocation: '/login',
     routes: [
       GoRoute(path: '/login', builder: (context, state) => LoginScreen()),
-      GoRoute(path: '/registration', builder: (context, state) => RegistrationScreen()),
-      GoRoute(path: '/home', builder: (context, state) => BottomNavigation()),
+      GoRoute(
+          path: '/registration',
+          builder: (context, state) => RegistrationScreen()),
+      GoRoute(path: '/home', builder: (context, state) => HomeScreen()),
       GoRoute(path: '/settings', builder: (context, state) => SettingsScreen()),
       GoRoute(path: '/canteen', builder: (context, state) => CanteenScreen()),
       GoRoute(path: '/main', builder: (context, state) => MainScreen()),
-      GoRoute(path: '/main/reservations', builder: (context, state) => ReservationsScreen(),),
-      GoRoute(path: '/main/reservations/laundry', builder: (context, state) => LaundryScreen(),)
+      GoRoute(
+        path: '/main/reservations',
+        builder: (context, state) => ReservationsScreen(),
+      ),
+      GoRoute(
+        path: '/main/reservations/laundry',
+        builder: (context, state) => LaundryScreen(),
+      )
     ],
   );
 

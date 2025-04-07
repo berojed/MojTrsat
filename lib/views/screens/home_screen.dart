@@ -43,6 +43,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     color: Colors.white,
                   ),
                 ),
+                GestureDetector(
+                  onTap: () async {
+                    try {
+                      context.go('/login');
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text('Error during Google sign-up: $e')),
+                      );
+                    }
+                  },
+                  child: Icon(Icons.logout),
+                ),
                 Padding(
                     padding: const EdgeInsets.only(left: 160.0),
                     child: IconButton(
@@ -222,7 +235,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               //so that the text is not cut off
               Expanded(
                 child: Column(

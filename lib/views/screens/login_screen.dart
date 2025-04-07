@@ -81,8 +81,7 @@ class LoginScreen extends ConsumerWidget {
                         obscureText: true,
                         style: const TextStyle(color: Colors.white),
                       ),
-                      if (isLoading)
-                        const CircularProgressIndicator(),
+                      if (isLoading) const CircularProgressIndicator(),
                       if (loginViewModel.errorMessage != null)
                         Text(loginViewModel.errorMessage!,
                             style: const TextStyle(color: Colors.red)),
@@ -93,30 +92,27 @@ class LoginScreen extends ConsumerWidget {
                             final password = passwordController.text;
 
                             try {
-                               bool success =
-                                await loginViewModel.login(email, password);
+                              bool success =
+                                  await loginViewModel.login(email, password);
 
-                            if (success) {
-                              context.go('/home'); // Navigacija pomoću GoRouter
-                            } else {
-                              
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Login nije uspio.')));
-                            }
+                              if (success) {
+                                context
+                                    .go('/home'); // Navigacija pomoću GoRouter
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Login nije uspio.')));
+                              }
                             } catch (e) {
                               print(e.toString());
                             }
-
-                           
                           },
                           child: const Text('Login')),
                       Padding(
                           padding: const EdgeInsets.only(top: 20, left: 180),
                           child: const Text(
                             'Zaboravili ste lozinku?',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 15),
+                            style: TextStyle(color: Colors.white, fontSize: 15),
                           )),
                       const SizedBox(height: 30),
                       const Text('ili',
@@ -124,11 +120,29 @@ class LoginScreen extends ConsumerWidget {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Image.asset(
-                            'assets/images/google_icon.png',
-                            width: 60,
-                            height: 60,
-                            colorBlendMode: BlendMode.multiply,
+                          GestureDetector(
+                            onTap: () async {
+                              try {
+                                final isSignedIn =
+                                    await loginViewModel.isGoogleSignedIn();
+                                if (!isSignedIn) {
+                                  await loginViewModel.signUpWithGoogle();
+                                }
+                                context.go('/home');
+                              } catch (e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text(
+                                          'Error during Google sign-up: $e')),
+                                );
+                              }
+                            },
+                            child: Image.asset(
+                              'assets/images/google_icon.png',
+                              width: 60,
+                              height: 60,
+                              colorBlendMode: BlendMode.multiply,
+                            ),
                           ),
                           const SizedBox(
                             height: 90,
@@ -149,7 +163,8 @@ class LoginScreen extends ConsumerWidget {
                           ElevatedButton(
                               child: const Text('Nemaš račun? Klikni ovdje'),
                               onPressed: () {
-                                context.go('/registration'); // Navigacija na registraciju
+                                context.go(
+                                    '/registration'); // Navigacija na registraciju
                               })
                         ],
                       )
