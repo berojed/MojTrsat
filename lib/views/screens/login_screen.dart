@@ -123,11 +123,10 @@ class LoginScreen extends ConsumerWidget {
                           GestureDetector(
                             onTap: () async {
                               try {
-                                final isSignedIn =
-                                    await loginViewModel.isGoogleSignedIn();
-                                if (!isSignedIn) {
-                                  await loginViewModel.signUpWithGoogle();
-                                }
+                                await loginViewModel.signOutFromGoogle();
+
+                                await loginViewModel.signUpWithGoogle();
+
                                 context.go('/home');
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(

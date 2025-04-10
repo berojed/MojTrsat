@@ -6,7 +6,6 @@ import 'package:mojtrsat/viewmodels/homeViewModels.dart';
 import 'package:mojtrsat/viewmodels/loginViewmodel.dart';
 import 'package:mojtrsat/viewmodels/registrationViewmodel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:mojtrsat/viewmodels/homeViewModels.dart';
 
 final supabaseClientProvider = Provider<SupabaseClient>((ref) {
   return Supabase.instance.client;
