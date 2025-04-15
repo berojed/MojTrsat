@@ -105,11 +105,10 @@ class RegistrationScreen extends ConsumerWidget {
                         GestureDetector(
                           onTap: () async {
                             try {
-                              final isSignedIn = await registrationViewModel
-                                  .isGoogleSignedIn();
-                              if (!isSignedIn) {
-                                await registrationViewModel.signUpWithGoogle();
-                              }
+                              await registrationViewModel.signOutFromGoogle();
+
+                              await registrationViewModel.signUpWithGoogle();
+
                               context.go('/home');
                             } catch (e) {
                               ScaffoldMessenger.of(context).showSnackBar(
