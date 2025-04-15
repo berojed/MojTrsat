@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -79,7 +80,11 @@ class _FeatureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: () {
+        context.go('/chat');
+      },
+    child:  Container(
       decoration: BoxDecoration(
         color: Color(0xFF1C1C1C),
         borderRadius: BorderRadius.circular(16),
@@ -106,6 +111,7 @@ class _FeatureCard extends StatelessWidget {
           )
         ],
       ),
+    )
     );
   }
 }

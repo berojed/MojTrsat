@@ -1,12 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mojtrsat/data/models/canteen.dart';
+import 'package:mojtrsat/data/models/chatmessage.dart';
 import 'package:mojtrsat/data/models/news_article.dart';
+import 'package:mojtrsat/data/models/student.dart';
 import 'package:mojtrsat/data/repositories/auth_repository.dart';
+import 'package:mojtrsat/viewmodels/chatViewModel.dart';
 import 'package:mojtrsat/viewmodels/homeViewModels.dart';
 import 'package:mojtrsat/viewmodels/loginViewmodel.dart';
 import 'package:mojtrsat/viewmodels/registrationViewmodel.dart';
+import 'package:mojtrsat/views/widgets/bottom_nav_bar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:mojtrsat/viewmodels/homeViewModels.dart';
 
 final supabaseClientProvider = Provider<SupabaseClient>((ref) {
   return Supabase.instance.client;
@@ -26,6 +29,10 @@ final registrationViewModelProvider =
   return RegistrationViewModel(ref.watch(authRepositoryProvider));
 });
 
+final bottomNavigationProvider = StateNotifierProvider<BottomNavigationNotifier, int>((ref) {
+  return BottomNavigationNotifier();
+});
+
 final canteenViewModelProvider =
     StateNotifierProvider<CanteenViewModel, AsyncValue<Canteen?>>((ref) {
   return CanteenViewModel(ref.watch(supabaseClientProvider));
@@ -34,4 +41,12 @@ final canteenViewModelProvider =
 final newsViewModelProvider =
     StateNotifierProvider<NewsViewModel, List<NewsArticle?>>((ref) {
   return NewsViewModel(ref.watch(supabaseClientProvider));
+});
+
+final studentViewModelProvider = StateNotifierProvider<StudentViewModel, AsyncValue<Student?>>((ref ){
+  return StudentViewModel(ref.watch(supabaseClientProvider));
+});
+
+final chatViewModelProvider = StateNotifierProvider<ChatViewModel, List<Chatmessage>>((ref) {
+  return ChatViewModel(ref.watch(supabaseClientProvider));
 });

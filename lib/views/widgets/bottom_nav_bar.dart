@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:mojtrsat/viewmodels/providers.dart';
 import 'package:mojtrsat/views/screens/home_screen.dart';
 import 'package:mojtrsat/views/screens/main_screen.dart';
 import 'package:mojtrsat/views/screens/settings_screen.dart';
@@ -12,10 +13,6 @@ class BottomNavigationNotifier extends StateNotifier<int> {
     state = index;
   }
 }
-
-final bottomNavigationProvider = StateNotifierProvider<BottomNavigationNotifier, int>((ref) {
-  return BottomNavigationNotifier();
-});
 
 
 class BottomNavigation extends ConsumerWidget {

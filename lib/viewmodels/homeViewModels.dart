@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mojtrsat/data/models/canteen.dart';
 import 'package:mojtrsat/data/models/news_article.dart';
+import 'package:mojtrsat/data/models/student.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CanteenViewModel extends StateNotifier<AsyncValue<Canteen?>> {
@@ -23,6 +24,8 @@ class CanteenViewModel extends StateNotifier<AsyncValue<Canteen?>> {
       state = AsyncValue.error(error, StackTrace.current);
     }
   }
+
+
 }
 
 class NewsViewModel extends StateNotifier<List<NewsArticle>> {
@@ -38,6 +41,7 @@ class NewsViewModel extends StateNotifier<List<NewsArticle>> {
 
     try {
       final response = await _supabase.from('articles_svjetionik').select();
+
       state = response.map((json) => NewsArticle.fromJson(json)).toList();
     } catch (e) 
      {
@@ -45,13 +49,34 @@ class NewsViewModel extends StateNotifier<List<NewsArticle>> {
     }
   }
 
-  
+}
+
+
+class StudentViewModel extends StateNotifier<AsyncValue<Student?>> {
+  final SupabaseClient _supabase;
+
+  StudentViewModel(this._supabase) : super(const AsyncValue.loading()) {
+    getStudentInfo();
+  }
+
+  Future<void> getStudentInfo() async {
+    try {
+      final response=await _supabase.from('users').select().eq('name', 'Bernard'); //ovdje stavi id od trenutnog usera
+      if(response.isNotEmpty){
+        final student = Student.fromJson(response.first);
+        //update state with student data
+        state = AsyncValue.data(student);     
+      }
+      else{
+        print(response);
+    }
+    }
+    catch (error){
+      print("Error: $error");
+    }
+  }
 
 
 
 }
-
-
-
-  
 

@@ -9,7 +9,7 @@ class SettingsScreen extends StatelessWidget {
       backgroundColor: Color(0xFF121212),
       appBar: AppBar(
         backgroundColor: Color(0xFF121212),
-        title: Text('Moj račun'),
+        title: Text('Moj račun', style: TextStyle(color: Colors.white)),
         actions: [
           IconButton(
             icon: Icon(Icons.exit_to_app),

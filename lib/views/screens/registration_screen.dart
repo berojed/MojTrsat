@@ -61,14 +61,17 @@ class RegistrationScreen extends ConsumerWidget {
                   children: [
                     SizedBox(height: 50),
                     TextField(
-                      controller: emailController,
+                      style: TextStyle(color: Colors.white),
+                      controller: emailController,                     
                       decoration: InputDecoration(
+                        
                           labelText: 'Email',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20))),
                     ),
                     SizedBox(height: 20),
                     TextField(
+                      style: TextStyle(color: Colors.white),
                       controller: passwordController,
                       decoration: InputDecoration(
                           labelText: 'Password',
@@ -87,9 +90,7 @@ class RegistrationScreen extends ConsumerWidget {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: Text('Uspješna registracija!')));
 
-                            Future.delayed(Duration(seconds: 1), () {
-                              Navigator.pushReplacementNamed(context, '/home');
-                            });
+                            context.go('/home');
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: Text('Registracija nije uspjela.')));

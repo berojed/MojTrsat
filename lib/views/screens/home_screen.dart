@@ -15,14 +15,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // displaying canteen data and news articles when the screen is initialized
+    // displaying canteen data, news articles and student info when the screen is initialized
     ref.read(canteenViewModelProvider.notifier).getCanteen();
     ref.read(newsViewModelProvider.notifier).getNews();
+    ref.read(studentViewModelProvider.notifier).getStudentInfo();
   }
 
   @override
   Widget build(BuildContext context) {
     final canteenes = ref.watch(canteenViewModelProvider);
+    final student = ref.watch(studentViewModelProvider);
+    var today =DateTime.now();
 
     return Scaffold(
       backgroundColor: Color(0xFF121212),
@@ -35,7 +38,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             Row(
               children: [
                 Text(
-                  "Bok, Bernard!",
+                  "Bok, ${student.value?.name}",
                   style: TextStyle(
                     fontFamily: 'Poppins',
                     fontSize: 24,
@@ -68,10 +71,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             SizedBox(height: 2),
             Text(
-              "Subota, 9. lipanj",
+              '${today.day}.${today.month}.${today.year}',
               style: TextStyle(
                 fontFamily: 'Poppins',
-                fontSize: 12,
+                fontSize: 14,
                 color: Colors.grey,
               ),
             ),
@@ -98,13 +101,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16)),
-                          canteenes.when(
-                            data: (canteen) => canteen != null
+                          student.when(
+                            data: (student) => student != null
                                 ? Padding(
                                     padding: const EdgeInsets.only(
                                         top: 32, left: 16),
                                     child: Text(
-                                      "   0/5.32€",
+                                      '${student.amountSpent} / ${student.amountDaily} eur',
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 24),
                                     ),
@@ -172,7 +175,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  //AI Generated from here
+  //AI Generated templeate for status card and news card
 
   Widget _buildStatusCard({
     required IconData icon,

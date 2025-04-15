@@ -1,34 +1,35 @@
-
 class Chatmessage {
   String messageID;
-  String userID;
-  String content;
-  DateTime timestamp;
+  String senderID;
+  String reciverID;
+  String message;
   DateTime createdAt;
 
-  Chatmessage({required this.messageID, required this.userID, required this.content, required this.timestamp, required this.createdAt});
+  Chatmessage({required this.messageID, required this.senderID, required this.reciverID, required this.message, required this.createdAt});
 
-  Map<String,dynamic> toMap()
+  Map<String,dynamic> toJson()
   {
     return{
-      'messageID':messageID,
-      'userID':userID,
-      'acontent':content,
-      'timestamp':timestamp,
+      'messageid':messageID,
+      'senderid':senderID,
+      'reciverid':reciverID,
+      'message':message,
       'createdAt':createdAt
     };
   }
 
-  factory Chatmessage.fromMap(Map<String,dynamic> map)
+  factory Chatmessage.fromJson(Map<String,dynamic> json)
   {
 
-    String messageID=map['messageID'];
-    String userID=map['userID'];
-    String content=map['content'];
-    DateTime timestamp = DateTime.parse(map['timestamp']);
-    DateTime createdAt = DateTime.parse(map['createdAt']);
-
-    return Chatmessage(messageID:messageID , userID: userID, content: content, timestamp: timestamp, createdAt: createdAt);
+    return Chatmessage(
+    messageID:json["messageid"], 
+    senderID: json["senderid"],
+    reciverID: json["reciverid"], 
+    message: json["message"],
+    createdAt: json["createdAt"] is String
+          ? DateTime.parse(json['createdAt'])
+          : json['createdAt'],
+    );
     
   }
 
