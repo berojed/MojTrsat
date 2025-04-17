@@ -5,14 +5,22 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class ChatViewModel extends StateNotifier<List<Chatmessage>> {
   final SupabaseClient _supabase;
 
-  ChatViewModel(this._supabase) : super([]) {
-    fetchMessages();
+  ChatViewModel(this._supabase) : super([]);
+    
+  
+
+  void fetchMessages(String reciverID) {
+    final currentUser = _supabase.auth.currentUser?.id;
+
+     if (currentUser == null) {
+    print("User not logged in");
+    return;
   }
 
-  void fetchMessages() {
     _supabase
         .from('chat_messages')       
         .stream(primaryKey: ['messageid'])
+        .inFilter('senderid', [currentUser, reciverID]) 
         .order('createdAt', ascending: true)
         .listen((List<Map<String, dynamic>> messages) {
           state =
@@ -34,8 +42,12 @@ class ChatViewModel extends StateNotifier<List<Chatmessage>> {
         'reciverid': reciverID,
         'message': message,
       });
+
+      
     } catch (e) {
       print('Error fetching chat messages: $e');
+      
     }
+    
   }
 }

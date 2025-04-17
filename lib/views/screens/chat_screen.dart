@@ -14,7 +14,7 @@ class _WholeChatScreenState extends ConsumerState<WholeChatScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(chatViewModelProvider.notifier).fetchMessages();
+    ref.read(chatViewModelProvider.notifier).fetchMessages('5aaf3c05-5346-4567-bf85-12cfe19a292f');
   }
 
   @override
@@ -25,12 +25,10 @@ class _WholeChatScreenState extends ConsumerState<WholeChatScreen> {
       appBar: AppBar(
         title: const Text('Poruke', style: TextStyle(color: Colors.white)),
         backgroundColor: Color(0xFF121212),
-        
       ),
-      backgroundColor:Color(0xFF121212),
-      body: 
-      Column(
-        mainAxisAlignment: MainAxisAlignment.start,      
+      backgroundColor: Color(0xFF121212),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
               child: messages.isEmpty
@@ -39,10 +37,8 @@ class _WholeChatScreenState extends ConsumerState<WholeChatScreen> {
                       style: TextStyle(color: Colors.white),
                     )
                   : Padding(
-                  
                       padding: const EdgeInsets.all(2),
                       child: ListView.builder(
-                        
                         itemCount: messages.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Padding(
@@ -71,16 +67,18 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(chatViewModelProvider.notifier).fetchMessages();
+    ref.read(chatViewModelProvider.notifier).fetchMessages('5aaf3c05-5346-4567-bf85-12cfe19a292f');
   }
 
   final TextEditingController _controller = TextEditingController();
   final String reciverID =
-      '0a8009da-becc-47c1-8ce2-0e9f2e82f6b5'; // Replace with actual receiver ID
+      '5aaf3c05-5346-4567-bf85-12cfe19a292f'; // Replace with actual receiver ID
 
   @override
   Widget build(BuildContext context) {
     final messages = ref.watch(chatViewModelProvider);
+    final _supabase = ref.watch(supabaseClientProvider);
+    final currentUser = _supabase.auth.currentUser;
 
     return Scaffold(
       appBar: AppBar(
@@ -92,9 +90,36 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             child: ListView.builder(
               itemCount: messages.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(messages[index].message.toString()),
-                );
+                final isMe = messages[index].senderID == currentUser?.id;
+                return Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Align(
+                      alignment:
+                          isMe ? Alignment.centerRight : Alignment.centerLeft,
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: isMe ? Colors.blue : Colors.grey[300],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child:
+                            Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          Text(
+                            messages[index].senderID,
+                            style: TextStyle(color: Colors.grey, fontSize: 8),
+                          ),
+                          Padding(padding: const EdgeInsets.only(bottom: 4.0)),
+                          Text(
+                            
+                            messages[index].message,
+                            style: TextStyle(
+                              color: isMe ? Colors.white : Colors.black,
+
+                            ),
+                          )
+                        ]),
+                      ),
+                    ));
               },
             ),
           ),
