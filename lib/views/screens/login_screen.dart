@@ -162,7 +162,7 @@ class LoginScreen extends ConsumerWidget {
                           ElevatedButton(
                               child: const Text('Nemaš račun? Klikni ovdje'),
                               onPressed: () {
-                                context.go(
+                                context.push(
                                     '/registration'); // Navigacija na registraciju
                               })
                         ],

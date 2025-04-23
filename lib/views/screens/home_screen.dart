@@ -49,7 +49,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 GestureDetector(
                   onTap: () async {
                     try {
-                      context.go('/login');
+                      context.push('/login');
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -80,7 +80,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             GestureDetector(
               onTap: () {
-                context.go('/canteen');
+                context.push('/canteen');
               },
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.2,

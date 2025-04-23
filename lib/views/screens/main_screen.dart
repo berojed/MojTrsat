@@ -82,7 +82,7 @@ class _FeatureCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go('/chat');
+        context.push('/chat');
       },
     child:  Container(
       decoration: BoxDecoration(

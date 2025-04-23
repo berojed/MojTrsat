@@ -15,7 +15,7 @@ class ChatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go('/individual_chat');
+        context.push('/individual_chat');
       },
       child: 
         Card(
