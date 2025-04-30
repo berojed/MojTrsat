@@ -1,11 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mojtrsat/data/models/canteen.dart';
 import 'package:mojtrsat/data/models/chatmessage.dart';
+import 'package:mojtrsat/data/models/gym_membership.dart';
 import 'package:mojtrsat/data/models/laundry.dart';
 import 'package:mojtrsat/data/models/news_article.dart';
 import 'package:mojtrsat/data/models/student.dart';
 import 'package:mojtrsat/data/repositories/auth_repository.dart';
 import 'package:mojtrsat/viewmodels/chatViewModel.dart';
+import 'package:mojtrsat/viewmodels/gymViewModel.dart';
 import 'package:mojtrsat/viewmodels/homeViewModels.dart';
 import 'package:mojtrsat/viewmodels/laundryViewmodel.dart';
 import 'package:mojtrsat/viewmodels/loginViewmodel.dart';
@@ -59,4 +61,9 @@ final chatViewModelProvider =
 final laundryViewModelProvider =
     StateNotifierProvider<Laundryviewmodel, List<Laundry>>((ref) {
   return Laundryviewmodel(ref.watch(supabaseClientProvider));
+});
+
+final gymViewModelProvider =
+    StateNotifierProvider<GymViewModel, AsyncValue<GymMembership?>>((ref) {
+  return GymViewModel(ref.watch(supabaseClientProvider));
 });

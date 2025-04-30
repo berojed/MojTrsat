@@ -22,13 +22,15 @@ class Chatmessage {
   {
 
     return Chatmessage(
-    messageID:json["messageid"], 
-    senderID: json["senderid"],
-    reciverID: json["reciverid"], 
-    message: json["message"],
-    createdAt: json["createdAt"] is String
-          ? DateTime.parse(json['createdAt'])
-          : json['createdAt'],
+    messageID:json["messageid"] ?? "", 
+    senderID: json["senderid"] ?? "",
+    reciverID: json["reciverid"] ?? "", 
+    message: json["message"] ?? "",
+    createdAt: (json["createdAt"] != null)
+          ? (json["createdAt"] is String
+              ? DateTime.parse(json['createdAt'])
+              : json['createdAt'])
+          : DateTime.now(),
     );
     
   }

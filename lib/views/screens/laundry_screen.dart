@@ -81,7 +81,7 @@ class _LaundryScreenState extends ConsumerState<LaundryScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Praonica'),
+        title: const Text('Praonica',style: TextStyle(color: Colors.white),),
         backgroundColor: Colors.black,
       ),
       body: Padding(
@@ -181,7 +181,9 @@ class _LaundryScreenState extends ConsumerState<LaundryScreen> {
                         .toList(),
                     onChanged: (value) {
                       setDialogState(() {
+
                         selectedMachine = value;
+                      
                       });
                     },
                   ),
@@ -207,7 +209,7 @@ class _LaundryScreenState extends ConsumerState<LaundryScreen> {
                           ref.read(laundryViewModelProvider.notifier);
                       Navigator.pop(context);
                       laundryViewModel.createLaundrySlot(
-                          selectedMachine.toString(),
+                          selectedMachine!,
                           timeSlots[selectedTimeSlot!],
                           days[selectedDayIndex]);
                       confirmReservation();

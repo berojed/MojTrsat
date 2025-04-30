@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mojtrsat/views/screens/chat_screen.dart';
+import 'package:mojtrsat/views/screens/gym_screen.dart';
 import 'package:mojtrsat/views/screens/laundry_screen.dart';
 import 'package:mojtrsat/views/screens/login_screen.dart';
 import 'package:mojtrsat/views/screens/main_screen.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
 
   final _router = GoRouter(
     initialLocation:
-        '/reservations/laundry', // temporary, change to '/login' on release
+        '/login', // temporary, change to '/login' on release
     routes: [
       GoRoute(path: '/login', builder: (context, state) => LoginScreen()),
       GoRoute(
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
       GoRoute(
           path: '/reservations/laundry',
           builder: (context, state) => LaundryScreen()),
+          GoRoute(path: '/gym', builder: (context, state) => GymScreen()),
     ],
   );
 

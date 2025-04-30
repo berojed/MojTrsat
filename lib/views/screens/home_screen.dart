@@ -46,19 +46,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     color: Colors.white,
                   ),
                 ),
-                GestureDetector(
-                  onTap: () async {
-                    try {
-                      context.push('/login');
-                    } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text('Error during Google sign-up: $e')),
-                      );
-                    }
-                  },
-                  child: Icon(Icons.logout),
-                ),
                 Padding(
                     padding: const EdgeInsets.only(left: 160.0),
                     child: IconButton(
@@ -157,12 +144,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   title: "Nedostupnost teretane",
                   time: "18.45 - 20.45",
                   color: Colors.redAccent,
+                  route: '/gym'
                 ),
                 _buildStatusCard(
                   icon: Icons.access_time,
                   title: "Slobodni termini",
                   time: "8.00 - 8.30",
                   color: Colors.greenAccent,
+                  route: '/reservations/laundry' 
                 ),
               ],
             ),
@@ -182,13 +171,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     required String title,
     required String time,
     required Color color,
+    required String route
   }) {
     return Expanded(
       child: Card(
         color: Color(0xFF1E1E1E),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         shadowColor: Color(0x00121212),
-        child: Padding(
+        child:
+        GestureDetector(
+          onTap: () {
+            context.push(route);
+          },
+          child: 
+        Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,6 +216,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
         ),
       ),
+    )
     );
   }
 

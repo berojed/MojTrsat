@@ -30,11 +30,15 @@ class MainScreen extends StatelessWidget {
                   color: Color(0xFF1C1C1C),
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: const Text(
-                  'Rezervacija termina pranja veša, opreme i ostalih usluga',
-                  style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+                child: GestureDetector(
+                  onTap: () {
+                    context.push('/reservations/laundry');
+                  },
+                  child: const Text('Rezervacija termina pranja veša, opreme i ostalih usluga',
+                  style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),)
                 ),
               ),
+              
               const SizedBox(height: 24),
               Expanded(
                 child: GridView.count(
@@ -45,18 +49,22 @@ class MainScreen extends StatelessWidget {
                     _FeatureCard(
                       title: 'Teretana',
                       description: 'Stvaranje, upravljanje i mijenjanje članarine',
+                      route: '/gym',
                     ),
                     _FeatureCard(
                       title: 'Plaćanja',
                       description: 'Plati stanarinu, članarinu za teretanu, kredite za pranje veša i ostalo',
+                      route: '/payments',
                     ),
                     _FeatureCard(
                       title: 'Eventovi',
                       description: 'Skupi ekipu iz doma i organiziraj druženja',
+                      route: '/events',
                     ),
                     _FeatureCard(
                       title: 'Chat',
                       description: 'Svoja pitanja proslijedi zaposlenima u Studentskom centru',
+                      route: '/chat',
                     ),
                   ],
                 ),
@@ -72,17 +80,19 @@ class MainScreen extends StatelessWidget {
 class _FeatureCard extends StatelessWidget {
   final String title;
   final String description;
+  final String route;
 
   const _FeatureCard({
     required this.title,
     required this.description,
+    required this.route,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push('/chat');
+        context.push(route);
       },
     child:  Container(
       decoration: BoxDecoration(

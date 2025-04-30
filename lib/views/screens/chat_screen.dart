@@ -5,6 +5,7 @@ import 'package:mojtrsat/views/widgets/chat_card.dart';
 
 class WholeChatScreen extends ConsumerStatefulWidget {
   const WholeChatScreen({super.key});
+  
 
   @override
   _WholeChatScreenState createState() => _WholeChatScreenState();
@@ -14,12 +15,15 @@ class _WholeChatScreenState extends ConsumerState<WholeChatScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(chatViewModelProvider.notifier).fetchMessages('5aaf3c05-5346-4567-bf85-12cfe19a292f');
+    
   }
 
   @override
   Widget build(BuildContext context) {
+
+    ref.read(chatViewModelProvider.notifier).fetchConversations();
     final messages = ref.watch(chatViewModelProvider);
+    
 
     return Scaffold(
       appBar: AppBar(
@@ -57,7 +61,9 @@ class _WholeChatScreenState extends ConsumerState<WholeChatScreen> {
 }
 
 class ChatScreen extends ConsumerStatefulWidget {
-  const ChatScreen({super.key});
+
+  const ChatScreen({super.key,});
+  
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -67,18 +73,22 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(chatViewModelProvider.notifier).fetchMessages('5aaf3c05-5346-4567-bf85-12cfe19a292f');
+    ref.read(chatViewModelProvider.notifier).fetchIndividualChatMessages();
   }
 
   final TextEditingController _controller = TextEditingController();
-  final String reciverID =
-      '5aaf3c05-5346-4567-bf85-12cfe19a292f'; // Replace with actual receiver ID
+  
 
   @override
   Widget build(BuildContext context) {
-    final messages = ref.watch(chatViewModelProvider);
-    final _supabase = ref.watch(supabaseClientProvider);
-    final currentUser = _supabase.auth.currentUser;
+    
+    final individualChatMessages = ref.watch(chatViewModelProvider);
+    final supabase = ref.watch(supabaseClientProvider);
+    final currentUser = supabase.auth.currentUser;
+
+
+    
+    
 
     return Scaffold(
       appBar: AppBar(
@@ -88,9 +98,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: messages.length,
+              itemCount: individualChatMessages.length,
               itemBuilder: (context, index) {
-                final isMe = messages[index].senderID == currentUser?.id;
+                final isMe = individualChatMessages[index].senderID == currentUser?.id;
                 return Padding(
                     padding: const EdgeInsets.all(5),
                     child: Align(
@@ -105,13 +115,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                         child:
                             Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
                           Text(
-                            messages[index].senderID,
+                            individualChatMessages[index].senderID,
                             style: TextStyle(color: Colors.grey, fontSize: 8),
                           ),
                           Padding(padding: const EdgeInsets.only(bottom: 4.0)),
                           Text(
                             
-                            messages[index].message,
+                            individualChatMessages[index].message,
                             style: TextStyle(
                               color: isMe ? Colors.white : Colors.black,
 
@@ -139,7 +149,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   onPressed: () {
                     ref
                         .read(chatViewModelProvider.notifier)
-                        .sendMessage(reciverID, _controller.text);
+                        .sendMessage('reciverID', _controller.text);
                     _controller.clear();
                   },
                 ),
