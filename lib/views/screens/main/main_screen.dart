@@ -32,7 +32,7 @@ class MainScreen extends StatelessWidget {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    context.push('/reservations/laundry');
+                    context.push('/reservations');
                   },
                   child: const Text('Rezervacija termina pranja veša, opreme i ostalih usluga',
                   style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),)

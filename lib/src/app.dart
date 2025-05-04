@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mojtrsat/views/screens/chat_screen.dart';
-import 'package:mojtrsat/views/screens/gym_screen.dart';
-import 'package:mojtrsat/views/screens/laundry_screen.dart';
-import 'package:mojtrsat/views/screens/login_screen.dart';
-import 'package:mojtrsat/views/screens/main_screen.dart';
-import 'package:mojtrsat/views/screens/reservations_screen.dart';
+import 'package:mojtrsat/views/screens/main/chat_screen.dart';
+import 'package:mojtrsat/views/screens/main/gym_screen.dart';
+import 'package:mojtrsat/views/screens/main/laundry_screen.dart';
+import 'package:mojtrsat/views/screens/login_and_registration/login_screen.dart';
+import 'package:mojtrsat/views/screens/main/main_screen.dart';
+import 'package:mojtrsat/views/screens/main/reservations_screen.dart';
 import 'package:mojtrsat/views/widgets/bottom_nav_bar.dart';
-import 'package:mojtrsat/views/screens/canteen_screen.dart';
-import 'package:mojtrsat/views/screens/registration_screen.dart';
-import 'package:mojtrsat/views/screens/settings_screen.dart';
+import 'package:mojtrsat/views/screens/home/canteen_screen.dart';
+import 'package:mojtrsat/views/screens/login_and_registration/registration_screen.dart';
+import 'package:mojtrsat/views/screens/settings/settings_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class MyApp extends StatelessWidget {
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           path: '/reservations',
           builder: (context, state) => ReservationsScreen()),
       GoRoute(
-          path: '/reservations/laundry',
+          path: '/laundry',
           builder: (context, state) => LaundryScreen()),
           GoRoute(path: '/gym', builder: (context, state) => GymScreen()),
     ],
