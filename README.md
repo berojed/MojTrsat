@@ -34,3 +34,70 @@ Login Screen  | Home Screen | Main Screen | Settings Screen |
 |------------|----------------|----------------|---------------|
 | [![login-Screen.png](https://i.postimg.cc/pLLbBVRK/login-Screen.png)](https://postimg.cc/YhZsrH4S)| [![home-Screen.png](https://i.postimg.cc/kgT9r6fj/home-Screen.png)](https://postimg.cc/mP1KCDxM) | [![main-Screen.png](https://i.postimg.cc/BQqQd0Jn/main-Screen.png)](https://postimg.cc/kDpmbLV0)  | [![settings-Screen.png](https://i.postimg.cc/1X0hvf8r/settings-Screen.png)](https://postimg.cc/H8LhxW4r)|
 
+
+
+
+
+## Local Setup & Installation
+
+Follow these steps to run the project locally on your machine.
+
+### Requirements
+
+Make sure you have the following installed:
+
+- **Flutter SDK** (version `3.29.2`): [Flutter installation guide](https://docs.flutter.dev/get-started/install)
+- **Android Studio** or **Visual Studio Code**
+- **Git**
+- A **Supabase** account: [https://supabase.io](https://supabase.io)
+
+---
+
+## Setup Steps
+
+#### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/mojtrsat.git
+cd mojtrsat
+```
+
+#### 2. Install Flutter dependencies
+
+```bash
+flutter pub get
+```
+
+#### 3. Run the app
+
+```bash
+flutter run
+```
+
+## Contributing
+
+#### 1. Fork the project (Click the "Fork" button on the top right of the GitHub page)
+
+#### 2. Create a new branch
+
+```bash
+git checkout -b my-feature
+```
+
+#### 3. Commit your changes
+
+```bash
+git commit -m "Add my feature"
+```
+
+#### 4. Push to your branch
+
+```bash
+git push origin my-feature
+```
+
+#### 5. Open a pull request to the original repository
+
+
+
+
