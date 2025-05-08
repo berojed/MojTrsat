@@ -17,7 +17,7 @@ samples, guidance on mobile development, and a full API reference.
 ## Technologies Used
 
 - **Flutter** (Dart)
-- **Supabase** (Backend & Authentication)
+- **Supabase** (Database, Backend & Authentication)
 - **RiverPod** (State Management)
 
 ## Features
@@ -97,6 +97,39 @@ git push origin my-feature
 ```
 
 #### 5. Open a pull request to the original repository
+---
+## Environment Configuration
+
+#### To keep sensitive information out of version control, you need to create a .env file in the root of your project.
+
+ 1. Create .env file
+In the root of the project (same level as pubspec.yaml), create a file named .env with the following content:
+
+```bash
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your-supabase-anon-key
+GOOGLE_WEB_CLIENT_ID=your-google-client-id
+```
+
+You can sign up for a free [Supabase](https://supabase.com) account and create your own project.
+
+2. Add .env to pubspec.yaml
+Make sure your pubspec.yaml includes the .env file in the assets section:
+
+```bash
+flutter:
+  assets:
+    - .env
+```
+
+3. Run your app after setting up your .env file:
+```bash
+flutter pub get
+flutter run
+```
+
+
+
 
 
 
