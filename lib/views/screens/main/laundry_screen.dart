@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mojtrsat/viewmodels/laundryViewmodel.dart';
-import 'package:mojtrsat/data/models/laundry.dart';
-import 'package:mojtrsat/viewmodels/providers.dart';
+import 'package:mojtrsat/providers/providers.dart';
 
 class LaundryScreen extends ConsumerStatefulWidget {
   const LaundryScreen({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:mojtrsat/viewmodels/providers.dart';
+import 'package:mojtrsat/providers/providers.dart';
 import 'package:mojtrsat/views/screens/home/home_screen.dart';
 import 'package:mojtrsat/views/screens/main/main_screen.dart';
 import 'package:mojtrsat/views/screens/settings/settings_screen.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mojtrsat/viewmodels/providers.dart';
+import 'package:mojtrsat/providers/providers.dart';
 import 'package:mojtrsat/views/widgets/chat_card.dart';
 
 class WholeChatScreen extends ConsumerStatefulWidget {
@@ -15,13 +15,14 @@ class _WholeChatScreenState extends ConsumerState<WholeChatScreen> {
   @override
   void initState() {
     super.initState();
+    ref.read(chatViewModelProvider.notifier).fetchConversations();
     
   }
 
   @override
   Widget build(BuildContext context) {
 
-    ref.read(chatViewModelProvider.notifier).fetchConversations();
+    
     final messages = ref.watch(chatViewModelProvider);
     
 

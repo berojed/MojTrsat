@@ -20,7 +20,7 @@ class Canteen {
       required this.workingHours_weekend
       });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'canteenID': canteenID,
       'canteenName': canteenName,
@@ -34,7 +34,7 @@ class Canteen {
     };
   }
 
-  factory Canteen.fromMap(Map<String, dynamic> map) {
+  factory Canteen.fromJson(Map<String, dynamic> map) {
     String canteenID = map['canteenID'] ?? '';
     String canteenName = map['canteenName'] ?? '';
     String menu1 = map['menu1'] ?? '';

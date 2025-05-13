@@ -7,6 +7,9 @@ class ChatViewModel extends StateNotifier<List<Chatmessage>> {
 
   ChatViewModel(this._supabase) : super([]);
 
+
+  // Method to fetch all conversations
+  // This method listens to the 'chat_messages' table and filters messages
   void fetchConversations() {
     final currentUser = _supabase.auth.currentUser?.id;
 
@@ -52,6 +55,7 @@ class ChatViewModel extends StateNotifier<List<Chatmessage>> {
     }
   }
 
+  // Method to fetch individual chat messages
   Future <void> fetchIndividualChatMessages() async {
     final currentUser = _supabase.auth.currentUser?.id;
 
@@ -85,6 +89,9 @@ class ChatViewModel extends StateNotifier<List<Chatmessage>> {
     }
   }
 
+  // Method to send a message
+  // This method inserts a new message into the 'chat_messages' table
+  // It takes the receiver's ID and the message content as parameters
   Future<void> sendMessage(String reciverID, String message) async {
     try {
       final currentUser = _supabase.auth.currentUser;
@@ -101,6 +108,41 @@ class ChatViewModel extends StateNotifier<List<Chatmessage>> {
       });
     } catch (e) {
       print('Error fetching chat messages: $e');
+    }
+  }
+
+  // Method to start a new chat
+  // This method inserts a new chat into the 'chat_messages' table
+  Future<void> startNewChat(String reciverID) async {
+    try {
+      final currentUser = _supabase.auth.currentUser;
+
+      if (currentUser == null) {
+        print('User not logged in');
+        return;
+      }
+
+      await _supabase.from('chat_messages').insert({
+        'senderid': currentUser.id,
+        'reciverid': reciverID
+      });
+    } catch (e) {
+      print('Error starting new chat: $e');
+    }
+  }
+
+  Future<void> deleteChat(String reciverID) async {
+    try {
+      final currentUser = _supabase.auth.currentUser;
+
+      if (currentUser == null) {
+        print('User not logged in');
+        return;
+      }
+
+      await _supabase.from('chat_messages').delete().eq('reciverid', reciverID).eq('senderid', currentUser.id);
+    } catch (e) {
+      print('Error deleting chat: $e');
     }
   }
 }

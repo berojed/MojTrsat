@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: Color(0xFF121212),
       appBar: AppBar(
@@ -13,8 +15,14 @@ class SettingsScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.exit_to_app),
-            onPressed: () {
+            onPressed: () async {
               
+              // Log out the user and navigate to the login screen
+              final supabase = Supabase.instance.client;
+              await supabase.auth.signOut();
+              
+
+
             },
           ),
         ],
@@ -27,8 +35,7 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 40,
-                  backgroundImage:
-                      AssetImage('assets/images/flutter_logo.png'),
+                  backgroundImage: AssetImage('assets/images/flutter_logo.png'),
                 ),
                 SizedBox(width: 16),
                 Column(
@@ -55,9 +62,7 @@ class SettingsScreen extends StatelessWidget {
                 Spacer(),
                 IconButton(
                   icon: Icon(Icons.edit, color: Colors.blue),
-                  onPressed: () {
-                    
-                  },
+                  onPressed: () {},
                 ),
               ],
             ),
@@ -65,54 +70,40 @@ class SettingsScreen extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.inbox, color: Colors.white),
               title: Text('Inbox', style: TextStyle(color: Colors.white)),
-              onTap: () {
-                
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: Icon(Icons.payment, color: Colors.white),
               title: Text('Plaćanja', style: TextStyle(color: Colors.white)),
-              onTap: () {
-                
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: Icon(Icons.report_problem, color: Colors.white),
               title:
                   Text('Prijavi štetu', style: TextStyle(color: Colors.white)),
-              onTap: () {
-                
-              },
+              onTap: () {},
             ),
             Divider(color: Colors.white),
             ListTile(
               leading: Icon(Icons.settings, color: Colors.white),
               title: Text('Postavke aplikacije',
                   style: TextStyle(color: Colors.white)),
-              onTap: () {
-                
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: Icon(Icons.help, color: Colors.white),
               title: Text('FAQ', style: TextStyle(color: Colors.white)),
-              onTap: () {
-                
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: Icon(Icons.language, color: Colors.white),
               title: Text('Jezik', style: TextStyle(color: Colors.white)),
-              onTap: () {
-                
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: Icon(Icons.support, color: Colors.white),
               title: Text('Podrška', style: TextStyle(color: Colors.white)),
-              onTap: () {
-                
-              },
+              onTap: () {},
             ),
           ],
         ),

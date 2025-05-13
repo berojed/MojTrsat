@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mojtrsat/viewmodels/providers.dart';
+import 'package:mojtrsat/providers/auth_providers.dart';
 
 class LoginScreen extends ConsumerWidget {
   final TextEditingController emailController = TextEditingController();
@@ -12,7 +12,6 @@ class LoginScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loginViewModel = ref.watch(loginViewModelProvider.notifier);
-    final isLoading = ref.watch(loginViewModelProvider);
 
     return Scaffold(
       backgroundColor: const Color(0x00121212),
@@ -81,7 +80,6 @@ class LoginScreen extends ConsumerWidget {
                         obscureText: true,
                         style: const TextStyle(color: Colors.white),
                       ),
-                      if (isLoading) const CircularProgressIndicator(),
                       if (loginViewModel.errorMessage != null)
                         Text(loginViewModel.errorMessage!,
                             style: const TextStyle(color: Colors.red)),
@@ -91,28 +89,27 @@ class LoginScreen extends ConsumerWidget {
                             final email = emailController.text;
                             final password = passwordController.text;
 
-                            try {
-                              bool success =
-                                  await loginViewModel.login(email, password);
+                            final result =
+                                await loginViewModel.login(email, password);
 
-                              if (success) {
-                                context
-                                    .go('/home'); // Navigacija pomoću GoRouter
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Login nije uspio.')));
-                              }
-                            } catch (e) {
-                              print(e.toString());
-                            }
+                            // Handle the login result
+                            result.fold(
+                                (failure) => ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        content: Text(failure.message))),
+                                (success) => context.go('/session'));
                           },
+                          
                           child: const Text('Login')),
                       Padding(
                           padding: const EdgeInsets.only(top: 20, left: 180),
-                          child: const Text(
-                            'Zaboravili ste lozinku?',
-                            style: TextStyle(color: Colors.white, fontSize: 15),
+                          child: GestureDetector(
+                            child: Text('Zaboravljena lozinka?',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16)),
+                            onTap: () {
+                              context.push('/reset_password');
+                            },
                           )),
                       const SizedBox(height: 30),
                       const Text('ili',
@@ -127,7 +124,7 @@ class LoginScreen extends ConsumerWidget {
 
                                 await loginViewModel.signUpWithGoogle();
 
-                                context.go('/home');
+                                context.go('/session');
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(

@@ -9,6 +9,7 @@ class GymViewModel extends StateNotifier<AsyncValue<GymMembership?>> {
     fetchGymMembership();
   }
 
+  // Method to fetch gym membership details
   Future<void> fetchGymMembership() async {
     try {
       final userId = _supabase.auth.currentUser?.id;
@@ -36,6 +37,8 @@ class GymViewModel extends StateNotifier<AsyncValue<GymMembership?>> {
     }
   }
 
+  // Method to create an empty gym membership
+  // This is used when a user signs up and we want to create an empty membership
   Future<void> createEmptyMembership(GymMembership membership) async {
     try {
       await _supabase.from('gym').insert(membership.toJson());
@@ -45,12 +48,13 @@ class GymViewModel extends StateNotifier<AsyncValue<GymMembership?>> {
     }
   }
 
+  // Method to add a gym membership when a user was already registered in gym, but dropped out and now wants to rejoin
   Future<void> addGymMembershipAgain(String membershipType, int membershipLength) async {
     final userId = _supabase.auth.currentUser?.id;
     if (userId == null) return;
 
     try {
-      // Fetching current membership to update membership historz
+      
       final response = await _supabase
           .from('gym')
           .select()
@@ -61,7 +65,7 @@ class GymViewModel extends StateNotifier<AsyncValue<GymMembership?>> {
 
       final currentMembership = GymMembership.fromJson(response);
 
-      // Updating history of memberships
+      
       final updatedHistory = [...currentMembership.membershipHistory, membershipType];
 
       final updateData = {
@@ -80,6 +84,8 @@ class GymViewModel extends StateNotifier<AsyncValue<GymMembership?>> {
     }
   }
 
+  // Method to remove a gym membership
+  // This is used when a user wants to drop out of the gym
   Future<void> removeGymMembership() async {
   final userId = _supabase.auth.currentUser?.id;
   if (userId == null) return;

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mojtrsat/data/models/gym_membership.dart';
-import 'package:mojtrsat/viewmodels/providers.dart';
+import 'package:mojtrsat/providers/auth_providers.dart';
+import 'package:mojtrsat/providers/providers.dart';
 import 'package:uuid/uuid.dart';
 
 class GymScreen extends ConsumerStatefulWidget {

@@ -3,17 +3,17 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:mojtrsat/data/models/laundry.dart';
 import 'package:uuid/uuid.dart';
 
+// This class will handle the data layer for the laundry reservations
+// It will interact with the database to fetch laundry reservations and create new reservations
 class Laundryviewmodel extends StateNotifier<List<Laundry>> {
   final SupabaseClient _supabase;
-  final String userID = Supabase.instance.client.auth.currentUser!.id;
+  final String userID;
 
-  Laundryviewmodel(this._supabase) : super([]);
+  Laundryviewmodel(this._supabase) : userID = _supabase.auth.currentUser!.id, super ([]);
 
   Future<bool> createLaundrySlot(int machineID, String timeSlot, String dayOfTheWeek) async {
     final uuid = Uuid();
     final newUUID = uuid.v4();
-    //final response = await fetchLaundrySlot(machineID, timeSlot, dayOfTheWeek);
-    //if (response!.isNotEmpty) return false;
 
     try {
       await _supabase.from('laundry').insert({

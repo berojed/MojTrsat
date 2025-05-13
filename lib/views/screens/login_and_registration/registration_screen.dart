@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mojtrsat/viewmodels/providers.dart';
-import 'package:mojtrsat/viewmodels/registrationViewmodel.dart';
+import 'package:mojtrsat/providers/auth_providers.dart';
 
 class RegistrationScreen extends ConsumerWidget {
   final TextEditingController emailController = TextEditingController();
@@ -105,8 +104,6 @@ class RegistrationScreen extends ConsumerWidget {
                         GestureDetector(
                           onTap: () async {
                             try {
-                              await registrationViewModel.signOutFromGoogle();
-
                               await registrationViewModel.signUpWithGoogle();
 
                               context.go('/home');

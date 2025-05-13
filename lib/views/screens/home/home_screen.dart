@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mojtrsat/viewmodels/providers.dart';
+import 'package:mojtrsat/providers/canteen_providers.dart';
+import 'package:mojtrsat/providers/news_providers.dart';
+import 'package:mojtrsat/providers/student_providers.dart';
 import 'package:mojtrsat/views/widgets/news_card.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -16,15 +18,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   void initState() {
     super.initState();
     // displaying canteen data, news articles and student info when the screen is initialized
-    ref.read(canteenViewModelProvider.notifier).getCanteen();
-    ref.read(newsViewModelProvider.notifier).getNews();
-    ref.read(studentViewModelProvider.notifier).getStudentInfo();
+    ref.read(canteenProvider);
+    ref.read(newsProvider);
+    ref.read(studentProvider);
   }
 
   @override
   Widget build(BuildContext context) {
-    final canteenes = ref.watch(canteenViewModelProvider);
-    final student = ref.watch(studentViewModelProvider);
+    final canteen = ref.watch(canteenProvider);
+    final student = ref.watch(studentProvider);
     var today =DateTime.now();
 
     return Scaffold(
@@ -116,7 +118,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16)),
-                          canteenes.when(
+                          canteen.when(
                             data: (canteen) => canteen != null
                                 ? Padding(
                                     padding: const EdgeInsets.only(top: 8),
@@ -151,7 +153,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   title: "Slobodni termini",
                   time: "8.00 - 8.30",
                   color: Colors.greenAccent,
-                  route: '/reservations/laundry' 
+                  route: '/laundry' 
                 ),
               ],
             ),
@@ -221,61 +223,62 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Widget _buildNewsCard(BuildContext context) {
-    final news = ref.watch(newsViewModelProvider);
+  final newsAsync = ref.watch(newsProvider); 
 
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.47,
-      width: MediaQuery.of(context).size.width,
-      child: Card(
-        color: Color(0xFF1E1E1E),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        shadowColor: Color(0x00121212),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //so that the text is not cut off
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Vijesti",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
+  return SizedBox(
+    height: MediaQuery.of(context).size.height * 0.47,
+    width: MediaQuery.of(context).size.width,
+    child: Card(
+      color: const Color(0xFF1E1E1E),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      shadowColor: const Color(0x00121212),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Vijesti",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Expanded(
-                        child: news.isEmpty
-                            ? Text(
-                                "No news available",
-                                style: TextStyle(color: Colors.white),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.all(2),
-                                child: ListView.builder(
-                                  itemCount: news.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Padding(
-                                        padding: const EdgeInsets.all(5),
-                                        child: NewsCard(
-                                            title: news[index]!.title,
-                                            link: news[index]!.link,
-                                            imageUrl: news[index]!.imageUrl));
-                                  },
-                                ),
-                              )),
-                  ],
-                ),
+                  ),
+                  Expanded(
+                    child: newsAsync.when(
+                      data: (news) => news.isEmpty
+                          ? const Text("Nema vijesti", style: TextStyle(color: Colors.white))
+                          : ListView.builder(
+                              itemCount: news.length,
+                              itemBuilder: (context, index) {
+                                final article = news[index];
+                                return Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: NewsCard(
+                                    title: article.title,
+                                    link: article.link,
+                                    imageUrl: article.imageUrl,
+                                  ),
+                                );
+                              },
+                            ),
+                      loading: () => const Center(child: CircularProgressIndicator()),
+                      error: (e, _) => Text("Greška: $e", style: const TextStyle(color: Colors.red)),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 }
