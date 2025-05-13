@@ -17,7 +17,7 @@ samples, guidance on mobile development, and a full API reference.
 ## Technologies Used
 
 - **Flutter** (Dart)
-- **Supabase** (Backend & Authentication)
+- **Supabase** (Database, Backend & Authentication)
 - **RiverPod** (State Management)
 
 ## Features
@@ -33,4 +33,104 @@ samples, guidance on mobile development, and a full API reference.
 Login Screen  | Home Screen | Main Screen | Settings Screen |
 |------------|----------------|----------------|---------------|
 | [![login-Screen.png](https://i.postimg.cc/pLLbBVRK/login-Screen.png)](https://postimg.cc/YhZsrH4S)| [![home-Screen.png](https://i.postimg.cc/kgT9r6fj/home-Screen.png)](https://postimg.cc/mP1KCDxM) | [![main-Screen.png](https://i.postimg.cc/BQqQd0Jn/main-Screen.png)](https://postimg.cc/kDpmbLV0)  | [![settings-Screen.png](https://i.postimg.cc/1X0hvf8r/settings-Screen.png)](https://postimg.cc/H8LhxW4r)|
+
+
+
+
+
+## Local Setup & Installation
+
+Follow these steps to run the project locally on your machine.
+
+### Requirements
+
+Make sure you have the following installed:
+
+- **Flutter SDK** (version `3.29.2`): [Flutter installation guide](https://docs.flutter.dev/get-started/install)
+- **Android Studio** or **Visual Studio Code**
+- **Git**
+- A **Supabase** account: [https://supabase.io](https://supabase.io)
+
+---
+
+## Setup Steps
+
+#### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/mojtrsat.git
+cd mojtrsat
+```
+
+#### 2. Install Flutter dependencies
+
+```bash
+flutter pub get
+```
+
+#### 3. Run the app
+
+```bash
+flutter run
+```
+
+## Contributing
+
+#### 1. Fork the project (Click the "Fork" button on the top right of the GitHub page)
+
+#### 2. Create a new branch
+
+```bash
+git checkout -b my-feature
+```
+
+#### 3. Commit your changes
+
+```bash
+git commit -m "Add my feature"
+```
+
+#### 4. Push to your branch
+
+```bash
+git push origin my-feature
+```
+
+#### 5. Open a pull request to the original repository
+---
+## Environment Configuration
+
+#### To keep sensitive information out of version control, you need to create a .env file in the root of your project.
+
+ 1. Create .env file
+In the root of the project (same level as pubspec.yaml), create a file named .env with the following content:
+
+```bash
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your-supabase-anon-key
+GOOGLE_WEB_CLIENT_ID=your-google-client-id
+```
+
+You can sign up for a free [Supabase](https://supabase.com) account and create your own project.
+
+2. Add .env to pubspec.yaml
+Make sure your pubspec.yaml includes the .env file in the assets section:
+
+```bash
+flutter:
+  assets:
+    - .env
+```
+
+3. Run your app after setting up your .env file:
+```bash
+flutter pub get
+flutter run
+```
+
+
+
+
+
+
 
