@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mojtrsat/data/models/gym_membership.dart';
 import 'package:mojtrsat/providers/auth_providers.dart';
-import 'package:mojtrsat/providers/providers.dart';
+import 'package:mojtrsat/providers/gym_providers.dart';
 import 'package:uuid/uuid.dart';
 
 class GymScreen extends ConsumerStatefulWidget {
@@ -41,12 +41,13 @@ class _GymScreenState extends ConsumerState<GymScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(gymViewModelProvider.notifier).fetchGymMembership();
+    ref.read(gymRepositoryProvider).getGymDetails();
   }
 
   @override
   Widget build(BuildContext context) {
     final membershipAsync = ref.watch(gymViewModelProvider);
+    final gymViewModel = ref.read(gymViewModelProvider.notifier);
 
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
@@ -98,7 +99,7 @@ class _GymScreenState extends ConsumerState<GymScreen> {
                           if (userId == null) return;
 
                           if (hasHistory) {
-                            await ref.read(gymViewModelProvider.notifier).addGymMembershipAgain(
+                            await gymViewModel.addGymMembershipAgain(
                                   selectedMembershipType,
                                   selectedLength,
                                 );
@@ -113,7 +114,7 @@ class _GymScreenState extends ConsumerState<GymScreen> {
                               createdAt: DateTime.now(),
                             );
 
-                            await ref.read(gymViewModelProvider.notifier).createEmptyMembership(newMembership);
+                            await gymViewModel.createEmptyMembership(newMembership);
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -141,7 +142,7 @@ class _GymScreenState extends ConsumerState<GymScreen> {
                       const SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () async {
-                          await ref.read(gymViewModelProvider.notifier).removeGymMembership();
+                          await gymViewModel.removeGymMembership();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.red,
@@ -181,15 +182,11 @@ class _GymScreenState extends ConsumerState<GymScreen> {
                       return ListView.builder(
                         itemCount: history.length,
                         itemBuilder: (context, index) {
-                          final created = membership?.createdAt;
-                          final dateStr = created != null
-                              ? '${created.day}/${created.month}/${created.year}'
-                              : 'Nepoznat datum';
-
+                          final entry = history[index];
                           return Container(
                             margin: const EdgeInsets.only(bottom: 10),
                             child: Text(
-                              '${history[index]}, kupljeno: $dateStr',
+                              entry,
                               style: const TextStyle(color: Colors.white),
                             ),
                           );

@@ -222,8 +222,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildNewsCard(BuildContext context) {
-  final newsAsync = ref.watch(newsProvider); 
+Widget _buildNewsCard(BuildContext context) {
+  final newsAsync = ref.watch(newsProvider);
 
   return SizedBox(
     height: MediaQuery.of(context).size.height * 0.47,
@@ -240,6 +240,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                
                 children: [
                   const Text(
                     "Vijesti",
@@ -249,16 +250,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  
                   Expanded(
                     child: newsAsync.when(
                       data: (news) => news.isEmpty
                           ? const Text("Nema vijesti", style: TextStyle(color: Colors.white))
                           : ListView.builder(
+                              padding: EdgeInsets.zero,  
                               itemCount: news.length,
                               itemBuilder: (context, index) {
                                 final article = news[index];
                                 return Padding(
-                                  padding: const EdgeInsets.all(5),
+                                  padding: const EdgeInsets.symmetric(vertical: 3),
                                   child: NewsCard(
                                     title: article.title,
                                     link: article.link,
@@ -280,5 +283,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     ),
   );
 }
+
 
 }

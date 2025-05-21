@@ -12,163 +12,243 @@ class LoginScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loginViewModel = ref.watch(loginViewModelProvider.notifier);
+    final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: const Color(0x00121212),
       body: Stack(
         children: [
-          Image.asset('assets/images/kampus-rijeka38.jpg',
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity),
-          Container(
-            color: const Color.fromARGB(176, 102, 27, 97),
-          ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: Padding(
-                padding: const EdgeInsets.only(top: 80, left: 80),
-                child: Column(
+          Positioned.fill(
+        child: Image.asset(
+          'assets/images/kampus-rijeka38.jpg', 
+          fit: BoxFit.cover,
+        ),
+      ),
+          Positioned(
+            top: 150,
+            left: 100,
+            right: 0,
+            child: Column(
+              children: const [
+                Column(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text('MojTrsat',
-                        style: TextStyle(
-                            fontSize: 40,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold)),
-                    const Padding(
-                        padding: EdgeInsets.only(left: 100),
-                        child: Text('Za lakši život na Trsatu',
-                            style:
-                                TextStyle(fontSize: 20, color: Colors.black))),
+                    Text(
+                      'MojTrsat',
+                      style: TextStyle(
+                        fontSize: 40,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Poppins',
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 80.0),
+                      child: Text(
+                        'Za lakši život na Trsatu',
+                        style: TextStyle(fontSize: 17, color: Colors.white, fontFamily: 'Poppins'),
+                        softWrap: false,
+                        overflow: TextOverflow.visible,
+                      ),
+                    ),
                   ],
-                )),
+                ),
+              ],
+            ),
           ),
-          Align(
-              alignment: Alignment.center,
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 31, 31, 50),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.white)),
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text(
-                        'Dobrodošli u MojTrsat!',
-                        style: TextStyle(color: Colors.white, fontSize: 30),
-                      ),
-                      const SizedBox(height: 50),
-                      TextField(
-                        style: const TextStyle(color: Colors.white),
-                        controller: emailController,
-                        decoration: InputDecoration(
-                            labelText: 'Email',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20))),
-                      ),
-                      const SizedBox(height: 20),
-                      TextField(
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                            labelText: 'Password',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20))),
-                        obscureText: true,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      if (loginViewModel.errorMessage != null)
-                        Text(loginViewModel.errorMessage!,
-                            style: const TextStyle(color: Colors.red)),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                          onPressed: () async {
-                            final email = emailController.text;
-                            final password = passwordController.text;
 
-                            final result =
-                                await loginViewModel.login(email, password);
+          // Lower container with input fields and buttons
+          Positioned.fill(
+            top: size.height * 0.35,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+              color: const Color(0xFF1C1C1E),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: 25),
 
-                            // Handle the login result
-                            result.fold(
-                                (failure) => ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                        content: Text(failure.message))),
-                                (success) => context.go('/session'));
-                          },
-                          
-                          child: const Text('Login')),
+                  // Password
+                  _buildInputField(
+                    controller: passwordController,
+                    hint: 'Lozinka',
+                    obscureText: true,
+                  ),
+                  const SizedBox(height: 25),
+
+                  // Log In button
+                  SizedBox(
+                    height: 52,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        final result = await loginViewModel.login(
+                          emailController.text,
+                          passwordController.text,
+                        );
+                        result.fold(
+                          (failure) =>
+                              ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(failure.message)),
+                          ),
+                          (success) => context.go('/session'),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(32),
+                        ),
+                      ),
+                      child: const Text('Prijava',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+
+                  const SizedBox(height: 35),
+
+                  // Divider
+                  Row(
+                    children: const [
+                      Expanded(child: Divider(color: Colors.white24)),
                       Padding(
-                          padding: const EdgeInsets.only(top: 20, left: 180),
-                          child: GestureDetector(
-                            child: Text('Zaboravljena lozinka?',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 16)),
-                            onTap: () {
-                              context.push('/reset_password');
-                            },
-                          )),
-                      const SizedBox(height: 30),
-                      const Text('ili',
-                          style: TextStyle(color: Colors.white, fontSize: 24)),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          GestureDetector(
-                            onTap: () async {
-                              try {
-                                await loginViewModel.signOutFromGoogle();
-
-                                await loginViewModel.signUpWithGoogle();
-
-                                context.go('/session');
-                              } catch (e) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text(
-                                          'Error during Google sign-up: $e')),
-                                );
-                              }
-                            },
-                            child: Image.asset(
-                              'assets/images/google_icon.png',
-                              width: 60,
-                              height: 60,
-                              colorBlendMode: BlendMode.multiply,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 90,
-                            width: 130,
-                          ),
-                          Image.asset(
-                            'assets/images/facebook_logo.png',
-                            width: 60,
-                            height: 60,
-                            colorBlendMode: BlendMode.multiply,
-                          )
-                        ],
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        child: Text('Ili',
+                            style: TextStyle(color: Colors.white60)),
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ElevatedButton(
-                              child: const Text('Nemaš račun? Klikni ovdje'),
-                              onPressed: () {
-                                context.push(
-                                    '/registration'); // Navigacija na registraciju
-                              })
-                        ],
-                      )
+                      Expanded(child: Divider(color: Colors.white24)),
                     ],
                   ),
-                ),
-              ))
+                  const SizedBox(height: 35),
+
+                  // Social login icons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _buildSocialIcon(icon: Icons.apple, onTap: () {}),
+                      const SizedBox(width: 32),
+                      _buildSocialIcon(
+                        imageAsset: 'assets/images/google_icon.png',
+                        onTap: () async {
+                          try {
+                            
+                            final alreadySignedIn =
+                                await loginViewModel.isGoogleSignedIn();
+                            if (alreadySignedIn) {
+                              await loginViewModel
+                                  .signOutFromGoogle(); 
+                            }
+
+                            await loginViewModel.signUpWithGoogle();
+                            final userExists =
+                                await loginViewModel.userExists();
+
+                            // Checking if the widget is still "alive" before navigating
+                                if (!context.mounted) return;
+
+                            if (userExists) {
+                              context.push('/session');
+                            } else {
+                              context.push('/registration/uniri_credentials');
+                            }
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text('Google login failed: $e')),
+                            );
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  // Sign Up link
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Nemate račun?",
+                          style: TextStyle(color: Colors.white70)),
+                      TextButton(
+                        onPressed: () => context.push('/registration'),
+                        child: const Text(
+                          'Registracija',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // Email field that overlaps the top container
+          Positioned(
+            top: size.height * 0.35 - 28,
+            left: 24,
+            right: 24,
+            child: _buildInputField(
+              controller: emailController,
+              hint: 'Email',
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildInputField({
+    required TextEditingController controller,
+    required String hint,
+    bool obscureText = false,
+  }) {
+    return Material(
+      elevation: 4,
+      borderRadius: BorderRadius.circular(32),
+      color: Colors.transparent,
+      child: TextField(
+        controller: controller,
+        obscureText: obscureText,
+        style: const TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: const TextStyle(color: Colors.white54),
+          filled: true,
+          fillColor: const Color(0xFF2C2C2E),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(32),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        ),
+      ),
+    );
+  }
+
+  static Widget _buildSocialIcon({
+    IconData? icon,
+    String? imageAsset,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 56,
+        height: 56,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Color(0xFF2C2C2E),
+        ),
+        child: Center(
+          child: icon != null
+              ? Icon(icon, color: Colors.white, size: 28)
+              : Image.asset(imageAsset!, width: 28, height: 28),
+        ),
       ),
     );
   }

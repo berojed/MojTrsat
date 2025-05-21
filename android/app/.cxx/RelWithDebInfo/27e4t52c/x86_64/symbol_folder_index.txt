@@ -1,0 +1,1 @@
+C:\Users\berna\VS Code projects\mojtrsat\build\app\intermediates\cxx\RelWithDebInfo\27e4t52c\obj\x86_64

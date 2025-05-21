@@ -23,5 +23,14 @@ class RegistrationViewModel extends BaseAuthViewModel {
     }
   }
 
+    Future<bool> uniriSignIn(String uniriEmail) async {
+    try {
+      final response = await authRepository.uniriSignIn(uniriEmail);
+      return response;
+    } catch (e) {
+      return false;
+    }
+  }
+
 
 }

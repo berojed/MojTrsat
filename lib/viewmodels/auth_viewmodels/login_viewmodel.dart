@@ -59,6 +59,25 @@ class LoginViewModel extends BaseAuthViewModel {
     }
   }
 
+  Future<bool> userExists() async {
+    try {
+      final userID = supabaseClient.auth.currentUser?.id;
+      if (userID == null) {
+        return false;
+      }
+      final response = await authRepository.userExists(userID);
+      return response;
+    } on SocketException {
+      throw const NetworkFailure();
+    } on PostgrestException catch (e) {
+      throw UnknownFailure(e.message);
+    } catch (e) {
+      throw UnknownFailure(e.toString());
+    }
+  }
+
+
+
   
 
 }

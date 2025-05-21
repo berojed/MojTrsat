@@ -4,140 +4,142 @@ import 'package:go_router/go_router.dart';
 import 'package:mojtrsat/providers/auth_providers.dart';
 
 class RegistrationScreen extends ConsumerWidget {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-  RegistrationScreen({super.key});
+  const RegistrationScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final registrationViewModel =
-        ref.watch(registrationViewModelProvider.notifier);
+    final registrationViewModel = ref.watch(registrationViewModelProvider.notifier);
+    final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Color(0x00121212),
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
-          Image.asset('assets/images/kampus-rijeka38.jpg',
-              fit: BoxFit.cover,
+          Padding(
+            padding: const EdgeInsets.only(top: 200, left: 32, right: 32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text(
+                  'Napravi račun',
+                  style: TextStyle(color: Colors.white, fontSize: 36, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'Započni svoje stanovanje na Trsatu',
+                  style: TextStyle(color: Colors.white70, fontSize: 18),
+                ),
+              ],
+            ),
+          ),
+
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: size.height * 0.45, 
               width: double.infinity,
-              height: double.infinity),
-          Container(
-            color: Color.fromARGB(176, 102, 27, 97),
-          ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: Padding(
-                padding: EdgeInsets.only(top: 80, left: 80),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('MojTrsat',
-                        style: TextStyle(
-                            fontSize: 40,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold)),
-                    Padding(
-                        padding: EdgeInsets.only(left: 100),
-                        child: Text('Za lakši život na Trsatu',
-                            style:
-                                TextStyle(fontSize: 20, color: Colors.black))),
-                  ],
-                )),
-          ),
-          Align(
-              alignment: Alignment.center,
-              child: Container(
-                padding: EdgeInsets.all(30),
-                decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 31, 31, 50),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.white)),
-                width: MediaQuery.of(context).size.width * 0.95,
-                height: MediaQuery.of(context).size.height * 0.6,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(height: 50),
-                    TextField(
-                      style: TextStyle(color: Colors.white),
-                      controller: emailController,                     
-                      decoration: InputDecoration(
-                        
-                          labelText: 'Email',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20))),
-                    ),
-                    SizedBox(height: 20),
-                    TextField(
-                      style: TextStyle(color: Colors.white),
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                          labelText: 'Password',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20))),
-                    ),
-                    SizedBox(height: 60),
-                    ElevatedButton(
-                        onPressed: () async {
-                          final email = emailController.text;
-                          final password = passwordController.text;
-                          bool success = await registrationViewModel.signup(
-                              email, password);
-
-                          if (success) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text('Uspješna registracija!')));
-
-                            context.go('/home');
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text('Registracija nije uspjela.')));
-                          }
-                        },
-                        child: Text('Registracija')),
-                    Text('ili',
-                        style: TextStyle(color: Colors.white, fontSize: 30)),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 38),
+              decoration: const BoxDecoration(
+                color: Color(0xFF1C1C1E), 
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                   _buildButton(
+                    iconAsset: 'assets/images/google_icon.png',
+                    text: 'Continue in with Google',
+                    onPressed: () async {
+                      try {
+                        await registrationViewModel.signUpWithGoogle();
+                        context.push('/registration/uniri_credentials');
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Google Sign-In failed: $e')),
+                        );
+                      }
+                    },
+                    
+                  ),
+                  const SizedBox(height: 16),
+                  _buildButton(
+                    icon: Icons.apple,
+                    text: 'Sign in with Apple',
+                    onPressed: () {},
+                  ),
+                 
+                  const SizedBox(height: 16),
+                  _buildButton(
+                    icon: Icons.mail_outline,
+                    text: 'Sign Up with Email',
+                    backgroundColor: const Color(0xFF007AFF),
+                    textColor: Colors.white,
+                    onPressed: () {
+                      context.push('/registration/email_registration');
+                    },
+                  ),
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Vec imate račun?", style: TextStyle(color: Colors.white70)),
+                      TextButton(
+                        onPressed: () => context.push('/login'),
+                        child: const Text('Prijava', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  const Text.rich(
+                    TextSpan(
                       children: [
-                        GestureDetector(
-                          onTap: () async {
-                            try {
-                              await registrationViewModel.signUpWithGoogle();
-
-                              context.go('/home');
-                            } catch (e) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text(
-                                        'Error during Google sign-up: $e')),
-                              );
-                            }
-                          },
-                          child: Image.asset(
-                            'assets/images/google_icon.png',
-                            width: 60,
-                            height: 60,
-                            colorBlendMode: BlendMode.multiply,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 60,
-                          width: 60,
-                        ),
-                        Image.asset(
-                          'assets/images/facebook_logo.png',
-                          width: 60,
-                          height: 60,
-                          colorBlendMode: BlendMode.multiply,
-                        ),
+                        TextSpan(text: "Slažem se s ", style: TextStyle(color: Colors.white38, fontSize: 12)),
+                        TextSpan(text: "Uvjetima korištenja", style: TextStyle(color: Colors.blue, fontSize: 12)),
+                        TextSpan(text: " i ", style: TextStyle(color: Colors.white38, fontSize: 12)),
+                        TextSpan(text: "Pravilima privatnosti.", style: TextStyle(color: Colors.blue, fontSize: 12)),
                       ],
                     ),
-                  ],
-                ),
-              ))
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildButton({
+    IconData? icon,
+    String? iconAsset,
+    required String text,
+    required VoidCallback onPressed,
+    Color backgroundColor = const Color(0xFF2C2C2E),
+    Color textColor = Colors.white,
+  }) {
+    return SizedBox(
+      width: double.infinity,
+      height: 52,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: backgroundColor,
+          foregroundColor: textColor,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+          elevation: 0,
+        ),
+        onPressed: onPressed,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (icon != null) Icon(icon, size: 20),
+            if (iconAsset != null)
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Image.asset(iconAsset, height: 20),
+              ),
+            const SizedBox(width: 8),
+            Text(text),
+          ],
+        ),
       ),
     );
   }

@@ -10,38 +10,84 @@ class NewsCard extends StatelessWidget {
     required this.title,
     required this.link,
     required this.imageUrl,
+    super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-        color: Colors.grey,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: GestureDetector(
-          onTap: () => {_launchURL(link)},
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              FadeInImage.assetNetwork(
-                  placeholder: "assets/images/flutter_logo.png",
-                  image: imageUrl),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  title,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      elevation: 4,
+      color: const Color(0xFF23232E), 
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18),
+      ),
+      margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(18),
+        onTap: () => _launchURL(link),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            
+            ClipRRect(
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
+              child: imageUrl.isNotEmpty
+                  ? FadeInImage.assetNetwork(
+                      placeholder: "assets/images/flutter_logo.png",
+                      image: imageUrl,
+                      width: double.infinity,
+                      height: 180,
+                      fit: BoxFit.cover,
+                      imageErrorBuilder: (_, __, ___) => Container(
+                        height: 180,
+                        color: Colors.grey[850],
+                        child: const Icon(Icons.broken_image, color: Colors.white38, size: 48),
+                      ),
+                    )
+                  : Container(
+                      height: 180,
+                      width: double.infinity,
+                      color: Colors.grey[850],
+                      child: const Icon(Icons.image, color: Colors.white38, size: 48),
+                    ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  height: 1.2,
                 ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(link),
+            ),
+            const SizedBox(height: 4),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+              child: Text(
+                link,
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: Colors.blueAccent,
+                  decoration: TextDecoration.underline,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-            ],
-          ),
-        ));
+            ),
+            const SizedBox(height: 12),
+          ],
+        ),
+      ),
+    );
   }
+
+
+
 
   // Launches the URL in the default browser of the device
   Future<void> _launchURL(String link) async {
@@ -50,4 +96,5 @@ class NewsCard extends StatelessWidget {
       throw 'Could not launch $url';
     }
   }
+
 }

@@ -1,0 +1,2 @@
+C:/Users/berna/VS Code projects/mojtrsat/android/app/.cxx/RelWithDebInfo/27e4t52c/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/berna/VS Code projects/mojtrsat/android/app/.cxx/RelWithDebInfo/27e4t52c/x86_64/CMakeFiles/rebuild_cache.dir

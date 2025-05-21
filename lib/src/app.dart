@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mojtrsat/views/screens/login_and_registration/email_registration_screen.dart';
 import 'package:mojtrsat/views/screens/login_and_registration/forgot_password.dart';
+import 'package:mojtrsat/views/screens/login_and_registration/uniri_credentials_screen.dart';
 import 'package:mojtrsat/views/screens/login_and_registration/user_session.dart';
 import 'package:mojtrsat/views/screens/main/chat_screen.dart';
+import 'package:mojtrsat/views/screens/main/events_screen.dart';
 import 'package:mojtrsat/views/screens/main/gym_screen.dart';
 import 'package:mojtrsat/views/screens/main/laundry_screen.dart';
 import 'package:mojtrsat/views/screens/login_and_registration/login_screen.dart';
@@ -30,6 +33,9 @@ class MyApp extends StatelessWidget {
       GoRoute(path: '/laundry',builder: (context, state) => LaundryScreen()),
       GoRoute(path: '/gym', builder: (context, state) => GymScreen()),
       GoRoute(path: '/reset_password', builder: (context, state) => ForgotPasswordScreen()),
+      GoRoute(path: '/registration/email_registration', builder: (context, state) => EmailRegistrationScreen()),
+      GoRoute(path: '/registration/uniri_credentials', builder: (context, state) => UniriCredentialsScreen()),
+      GoRoute(path: '/events',builder: (context, state) => EventsScreen())
     ],
   );
 

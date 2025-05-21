@@ -27,9 +27,11 @@ class AuthRepository {
   }
 
   // Method to sign in a user with Google auth
-  Future<void> signInWithGoogle(String androidClientId) async {
-  final googleSignIn = GoogleSignIn(
-    clientId: androidClientId,
+  Future<void> signInWithGoogle(String webClientId) async {
+
+    try {
+    final googleSignIn = GoogleSignIn(
+    clientId: webClientId
   );
 
   final googleUser = await googleSignIn.signIn();
@@ -39,11 +41,17 @@ class AuthRepository {
     throw 'Failed to retrieve Google tokens.';
   }
 
-  await supabaseClient.auth.signInWithIdToken(
+  final response = await supabaseClient.auth.signInWithIdToken(
     provider: OAuthProvider.google,
     idToken: googleAuth.idToken!,
     accessToken: googleAuth.accessToken!,
   );
+
+    } catch (e) {
+       print("Error: $e");
+    }
+ 
+
 }
 
 
@@ -60,6 +68,39 @@ class AuthRepository {
   Future<void> resetPassword(String email) async {
     try {
       await supabaseClient.auth.resetPasswordForEmail(email);
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<bool> userExists(String userID) async {
+    try {
+      final response = await supabaseClient
+          .from('users')
+          .select()
+          .eq('userid', userID)
+          .maybeSingle();
+
+      
+      return response != null;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<bool> uniriSignIn(String uniriEmail) async {
+    try {
+      final user = supabaseClient.auth.currentUser;
+
+      await supabaseClient.from('users').upsert({
+        'userid': user?.id,
+        'email': user?.email,
+        'uniri_email': uniriEmail,
+
+      });
+
+      return true;
+      
     } catch (e) {
       throw e.toString();
     }

@@ -13,10 +13,10 @@ abstract class BaseAuthViewModel extends StateNotifier<bool> {
   bool isLoading = false;
   String? errorMessage;
   
-  String androidClientId = dotenv.env['ANDROID_CLIENT_ID']!;
+  String webClientId = dotenv.env['WEB_CLIENT_ID']!;
 
   Future<void> signUpWithGoogle() async {
-    await authRepository.signInWithGoogle(androidClientId);
+    await authRepository.signInWithGoogle(webClientId);
   }
 
   Future<void> signOutFromGoogle() async {

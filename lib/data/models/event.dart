@@ -1,4 +1,3 @@
-
 class Event {
   String eventID;
   String title;
@@ -7,33 +6,34 @@ class Event {
   String location;
   DateTime createdAt;
 
-  Event({required this.eventID, required this.title,  required this.description, required this.date, required this.location, required this.createdAt});
+  Event({
+    required this.eventID,
+    required this.title,
+    required this.description,
+    required this.date,
+    required this.location,
+    required this.createdAt,
+  });
 
-  Map<String,dynamic> toMap()
-  {
-    return{
-      'eventID':eventID,
-      'title':title,
-      'description':description,
-      'date': date,
-      'location':location,
-      'createdAt':createdAt
+  Map<String, dynamic> toMap() {
+    return {
+      'eventID': eventID,
+      'title': title,
+      'description': description,
+      'date': date.toIso8601String(),
+      'location': location,
+      'createdAt': createdAt.toIso8601String(),
     };
   }
 
-  factory Event.fromMap(Map<String,dynamic> map)
-  {
-
-    String eventID=map['eventID'];
-    String title=map['title'];
-    String description=map['description'];
-    DateTime date = DateTime.parse('date');
-    String location = map['location'];
-    DateTime createdAt = DateTime.parse(map['createdAt']);
-
-    return Event(eventID: eventID, title: title, description: description, date: date, location: location, createdAt: createdAt);
-    
+  factory Event.fromMap(Map<String, dynamic> map) {
+    return Event(
+      eventID: map['eventID'] as String,
+      title: map['title'] as String,
+      description: map['description'] as String,
+      date: DateTime.parse(map['date']),
+      location: map['location'] as String,
+      createdAt: DateTime.parse(map['createdAt']),
+    );
   }
-
-
 }

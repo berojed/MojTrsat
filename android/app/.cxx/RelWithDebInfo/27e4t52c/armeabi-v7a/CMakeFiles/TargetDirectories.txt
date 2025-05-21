@@ -1,0 +1,2 @@
+C:/Users/berna/VS Code projects/mojtrsat/android/app/.cxx/RelWithDebInfo/27e4t52c/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/berna/VS Code projects/mojtrsat/android/app/.cxx/RelWithDebInfo/27e4t52c/armeabi-v7a/CMakeFiles/rebuild_cache.dir
