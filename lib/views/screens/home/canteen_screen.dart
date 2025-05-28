@@ -12,7 +12,7 @@ class CanteenScreen extends ConsumerWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // Pozadinska slika s blur efektom za moderni look
+          
           Positioned.fill(
             child: Container(
               color: Colors.black,

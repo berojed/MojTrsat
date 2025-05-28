@@ -10,7 +10,10 @@ final supabaseClientProvider = Provider<SupabaseClient>((ref) {
   return Supabase.instance.client;
 });
 
-
+final currentUserProvider = Provider<String?>((ref) {
+  final supabase = ref.watch(supabaseClientProvider);
+  return supabase.auth.currentUser?.id;
+});
 
 final bottomNavigationProvider =
     StateNotifierProvider<BottomNavigationNotifier, int>((ref) {

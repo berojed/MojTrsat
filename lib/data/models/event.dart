@@ -1,10 +1,13 @@
 class Event {
-  String eventID;
-  String title;
-  String description;
-  DateTime date;
-  String location;
-  DateTime createdAt;
+  final String eventID;
+  final String title;
+  final String description;
+  final DateTime date;
+  final String location;
+  final DateTime createdAt;
+  final List<String> attendees; 
+  final String? imageUrl;       
+  final String? type;          
 
   Event({
     required this.eventID,
@@ -13,9 +16,12 @@ class Event {
     required this.date,
     required this.location,
     required this.createdAt,
+    this.attendees = const [],
+    this.imageUrl,
+    this.type,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'eventID': eventID,
       'title': title,
@@ -23,17 +29,25 @@ class Event {
       'date': date.toIso8601String(),
       'location': location,
       'createdAt': createdAt.toIso8601String(),
+      'attendees': attendees,
+      'imageUrl': imageUrl,
+      'type': type,
     };
   }
 
-  factory Event.fromMap(Map<String, dynamic> map) {
+  factory Event.fromJson(Map<String, dynamic> map) {
     return Event(
-      eventID: map['eventID'] as String,
-      title: map['title'] as String,
-      description: map['description'] as String,
+      eventID: map['eventID'],
+      title: map['title'],
+      description: map['description'],
       date: DateTime.parse(map['date']),
-      location: map['location'] as String,
+      location: map['location'],
       createdAt: DateTime.parse(map['createdAt']),
+      attendees: map['attendees'] != null
+          ? List<String>.from(map['attendees'])
+          : [],
+      imageUrl: map['imageUrl'],
+      type: map['type'],
     );
   }
 }
